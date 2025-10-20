@@ -1,0 +1,390 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello Nova Danse{% endblock %}
+
+{% block body %}
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Helvetica', sans-serif;
+
+}
+
+body {
+    background: linear-gradient(90deg, #0088FF, #CE61C2); /* Dégradé linéaire horizontal */
+    height: 100vh; /* Assure que le dégradé couvre toute la hauteur de la fenêtre */
+    margin: 0;
+    color: white;
+}
+
+nav{
+    color: black;
+}
+
+.NavBar {
+    background-color: #E1BAD9;
+    height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    position: relative;
+}
+
+.NavBar ul {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+}
+.NavBar ul li a:hover{
+   color:rgb(255, 255, 255);
+    transition: 0.3s;
+}
+
+.NavBar ul li:first-child {
+    display: inline-block;
+    padding: 20px;
+    font-size: 24px; /* Taille de police plus grande pour le premier élément */
+    font-weight: normal;
+}
+.NavBar ul li:not(:first-child) {
+    display: inline-block;
+    padding: 20px;
+    font-size: 16px; /* Taille de police plus petite pour les autres éléments */
+    font-weight: lighter;
+    float: right;
+}
+
+.NavBar ul li a {
+    text-decoration: none;
+    color: black;
+}
+img{
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+
+}
+.header{
+    text-align: center;
+    margin-top: 20px;
+    margin: 20px 20px;
+}
+.menu-icon {
+    display: none; /* Caché par défaut */
+    flex-direction: column;
+    cursor: pointer;
+}
+.menu-icon .bar {
+    width: 30px;
+    height: 4px;
+    background-color: white;
+    margin: 4px 0;
+    border-radius: 20px;
+}
+.menu-icon{
+    border:1px solid transparent;
+    background-color:rgb(85, 158, 231);
+    border-radius: 50%;
+    padding:25px;
+
+
+
+}
+
+h1{
+    margin-left: 20px;
+    font-size: 64px;
+    font-weight: normal;
+    padding:30px;
+}
+
+.dates{
+    background:linear-gradient(90deg, #ECEC77, #D099CB);
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    width: auto;
+    min-width: 100px;
+    height: auto;
+    margin: 20px;
+    display: inline-block;
+    color: black;
+
+}
+.dates h2{
+    font-size: 38px;
+    margin-bottom: 10px;
+    color: black;
+}
+
+
+.container {
+    display: flex; /* Active Flexbox pour aligner les éléments côte à côte */
+    justify-content:start;  /* Ajoute de l'espace entre les éléments */
+    align-items: center; /* Aligne les éléments verticalement */
+    gap: 0; /* Ajoute un espacement entre les éléments */
+    margin: 10px;
+}
+.Information{
+    background: transparent;
+    border-radius: 10px;
+    padding: 20px;
+    width: 600px;
+    height: auto;
+    min-height: auto;
+    border: 1px solid white;
+
+}
+.Information p{
+    font-size: 10px;
+
+}
+.Information:hover{
+    background: rgba(255, 255, 255, 0.44);
+    transition: 0.3s;
+}
+
+.geometry{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  width: 500px;
+  height: 500px;
+  margin: 40px auto;
+  margin-top:150px;
+  gap: 0;
+  overflow: visible;
+  max-width: 100%;
+  
+}
+
+.cell{
+  position: relative;
+  overflow: visible;
+  max-width: 100%;
+  
+}
+
+.shape{
+  position: absolute;
+  background-color: #E1BAD9;
+  border: 1px solid transparent;
+  box-sizing: border-box;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+ 
+ 
+}
+
+/* Shape 1 — reste au centre en haut à gauche */
+.cell-tl .shape1{
+  width: 90%;
+  height: 90%;
+  background-color: #483097;
+  border-radius: 194px 194px 0 194px;
+
+  bottom: 0;
+  right: 0;
+  transform: translate(0, 0);
+}
+
+/* Shape 2 — descend légèrement pour casser la symétrie */
+.cell-tr .shape2{
+  width: 150%;
+  height: 150%;
+  border-radius: 372px 372px 372px 0;
+  background-color: #312493;
+
+  bottom: 0;
+  left: 0;
+  transform: translate(0, 30px); /* ↓ descend de 30px */
+}
+
+/* Shape 3 — remonte légèrement pour créer la croix */
+.cell-bl .shape3{
+  width: 130%;
+  height: 130%;
+  border-radius: 372px 0 372px 372px;
+
+  background-color: #312493;
+  top: 0;
+  right: 0;
+  transform: translate(0, -30px); /* ↑ monte de 30px */
+}
+
+/* Shape 4 — reste neutre ou légèrement décalée si besoin */
+.cell-br .shape4{
+  width: 100%;
+  height: 100%;
+  background-color: #483097;
+  border-radius: 0 194px 194px 194px;
+
+  top: 0;
+  left: 0;
+  transform: translate(0, 0);
+}
+
+.geometry p{
+    position: absolute;
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    z-index: 1;
+}
+
+p{
+    margin: 20px;
+    font-size: 18px;
+    font-weight: lighter;
+    line-height: 1.6;
+}
+
+        
+@media (max-width: 900px) {
+    .NavBar ul li:not(:first-child) {
+        display:none;
+    }
+   .menu-icon {
+        display: flex; /* Affiche le menu burger */
+    }
+    .shape{
+        max-width: 100%;
+min-height: auto; 
+    }
+
+}
+</style>
+
+<nav class="NavBar">
+    <ul>
+        <li><a href="">NØVA DANSE</a></li>
+        <li><a href="">Contact</a></li>
+       
+        <li><a href="">A propos de nous</a></li>
+        <li><a href="">Cours/planning</a></li>
+        <li><a href="">Acceuil</a></li>
+        
+    </ul>
+    <div class="menu-icon" onclick="toggleMenu()">
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+    </div>
+
+
+</nav> 
+<div class="header" >
+    <img src="{{ asset('Pictures/pexels-george-desipris-1110704.jpg') }}" alt="Image de danse"> 
+</div>
+
+
+<h1>Les prochains cours en studio</h1><br/>
+
+<div class="container">
+    <div class="dates">
+        <h2>06</h2>
+        <p>Juin, 2025</p>
+    </div>
+    <div class="Information">
+        <h3>FORUM DES ASSOCIATIONS</h3><br/>
+        <p>10:00 - 17:00 </p>
+        <p style= "float:right;">ESPLANADE DE LA SALLE POLYVALENTE</p><br/>
+    </div>
+</div>
+<div class="container">
+    <div class="dates">
+        <h2>15</h2>
+        <p>Juin, 2025</p>
+    </div>
+    <div class="Information">
+        <h3>REPRISE DES COURS MODERN</h3><br/>
+        <p>17:30 - 19:00 : PRE ADOS<br/>
+            19:00 - 20:30 : ADULTE </p>
+        <p style= "float:right;">SALLE BOULANGER</p><br/>
+    </div>
+</div>
+<div class="container">
+    <div class="dates">
+        <h2>17</h2>
+        <p>Juin, 2025</p>
+    </div>
+    <div class="Information">
+        <h3>REPRISE DES COURS CLASSIQUE</h3><br/>
+        <p>17:30 - 18:15 : PRE EVEIL<br/>
+18H15-19H15 : CLASSIQUE 1<br/>
+19H15-20H15 : CLASSIQUE2 </p>
+        <p style= "float:right;">
+        SALLE BOULANGER</p><br/>
+    </div>
+</div>
+
+<h1>VOTRE PREMIER COUR D’ESSAI OFFERT</h1>
+<div class="geometry">
+  <div class="cell cell-tl"><div class="shape shape1"><p>ÉVEIL<br/>DÉS 4 ANS</p></div></div>
+  <div class="cell cell-tr"><div class="shape shape2"><p>DANSE<br/>MODERNE<Br/>ADULTE</p></div></div>
+  <div class="cell cell-bl"><div class="shape shape3"><p>DANSE<br/>CLASSIQUE<Br/>DÉS 8 ANS</p></div></div>
+  <div class="cell cell-br"><div class="shape shape4"><p>DANSE<br/>MODERNE<Br/>DÉS 11 ANS</p></div></div>
+</div>
+
+<h1>Des studios de danse,
+pour tout le monde</h1>
+<p>Studios climatisés équipés pour les danseurs<br/>
+amateurs et profesionnels, vestiaires, cafés et
+snacks à l’acceuil.</p>
+
+
+
+<script>
+ document.addEventListener('DOMContentLoaded', () => {
+  const shapes = document.querySelectorAll('.shape');
+  const geometry = document.querySelector('.geometry');
+
+  // Translation initiale hors écran
+  shapes.forEach((shape, i) => {
+    const direction = (i % 2 === 0) ? -100 : 100;
+    shape.style.transform = `translateX(${direction}px)`;
+    shape.style.opacity = 0;
+  });
+
+  // Intersection Observer pour détecter quand la div entre dans le viewport
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        // Animation légère au scroll
+        function updateShapes() {
+          const scrollTop = window.scrollY;
+          const rect = geometry.getBoundingClientRect();
+          const offsetY = Math.min(Math.max(window.innerHeight - rect.top, 0), 600);
+          const progress = offsetY / 600;
+
+          shapes.forEach((shape, i) => {
+            const direction = (i % 2 === 0) ? -100 : 100;
+            const move = direction * (1 - progress) * 0.5;
+            shape.style.transform = `translateX(${move}px)`;
+            shape.style.opacity = progress;
+          });
+        }
+
+        updateShapes();
+        window.addEventListener('scroll', updateShapes);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  observer.observe(geometry);
+});
+
+
+</script>
+
+    
+
+{% endblock %}
