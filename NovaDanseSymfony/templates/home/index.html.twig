@@ -19,8 +19,10 @@ body {
     color: white;
 }
 
-nav{
+nav {
     color: black;
+   
+
 }
 
 .NavBar {
@@ -30,7 +32,8 @@ nav{
     align-items: center;
     justify-content: space-between;
     padding: 0 20px;
-    position: relative;
+    position: sticky;
+    top: 0;
 }
 
 .NavBar ul {
@@ -239,12 +242,89 @@ h1{
     text-align: center;
     z-index: 1;
 }
-
-p{
+.SectionsContainer {
+  display: grid;
+  grid-template-columns: 1fr auto; /* texte à gauche, bouton à droite */
+  gap: 20px; /* espace entre texte et bouton */
+  margin-bottom: 40px;
+  max-width: 100%;
+}
+.Section {
+  display: contents; /* permet au grid de gérer directement texte et bouton */
+}
+.Section .button {
+  align-self: start; /* aligne le bouton en haut du texte */
+}
+.Section p{
     margin: 20px;
-    font-size: 18px;
+    font-size: 22px;
     font-weight: lighter;
     line-height: 1.6;
+}
+.Section h1{
+    margin-left: 20px;
+    font-size: 38px;
+    font-weight: normal;
+    padding:10px;
+}
+.button {
+    display: inline-block;
+    position: relative; /* nécessaire pour ::after */
+    background-color: rgb(255, 255, 255);
+    color: black;
+    padding: 10px 20px;
+    border: 1px solid white;
+    cursor: pointer;
+    margin: 20px;
+    transition: background-color 0.3s, transform 0.2s;
+    right: 20px;
+
+/* optionnel, pour arrondir le bouton et le calque */
+}
+.button p{
+    font-size: 20px;
+    margin:20px;
+}
+
+.button::after {
+    content: '';
+    position: absolute;
+    top: 10px;       /* décalage vertical du calque */
+    left: 10px;      /* décalage horizontal du calque */
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, #CE61C2, #0088FF);
+ /* doit correspondre au bouton */
+    z-index: -1;         /* derrière le bouton */
+    pointer-events: none; /* ne bloque pas le clic */
+    transition: all 0.2s;
+}
+.flyer p{
+    text-align: center;
+    font-size: 28px;
+    margin-bottom: 40px;
+    font-weight: lighter;
+    
+}
+.flyer{
+    background-image: url('{{ asset('Pictures/graceful-ballerina-in-white-tutu-dancing-on-pointe-against-black-background-png.webp') }}');
+    background-size: contain;  /* l'image sera entièrement visible */
+    background-repeat: no-repeat;
+    background-position: right center; /* positionne l'image en haut à gauche */
+    transform: translateY(50px); /* position de départ décalée */
+    opacity: 0; /* invisible au départ */
+    transition: transform 0.6s ease-out, opacity 0.6s ease-out;
+
+
+}
+.flyer h1{
+    text-align: center;
+    font-size: 180px;
+    font-weight: bold;
+    padding:0px;
+    padding-top:0px;
+    color: blue;
+
 }
 
         
@@ -333,12 +413,55 @@ min-height: auto;
   <div class="cell cell-bl"><div class="shape shape3"><p>DANSE<br/>CLASSIQUE<Br/>DÉS 8 ANS</p></div></div>
   <div class="cell cell-br"><div class="shape shape4"><p>DANSE<br/>MODERNE<Br/>DÉS 11 ANS</p></div></div>
 </div>
-
-<h1>Des studios de danse,
+<h1>Des studios de danse,<br/>
 pour tout le monde</h1>
-<p>Studios climatisés équipés pour les danseurs<br/>
-amateurs et profesionnels, vestiaires, cafés et
-snacks à l’acceuil.</p>
+<div class="SectionsContainer">
+
+  <div class="Section">
+    <p>
+      Studios climatisés équipés pour les danseurs<br/>
+      amateurs et professionnels, vestiaires, cafés et snacks à l’accueil.
+    </p>
+    <div class="button">
+      <p>Voir nos studios</p>
+    </div>
+  </div>
+</div>
+  <h1>Se dire en mouvement, <br/>
+s’unir en dansant </h1>
+<div class="SectionsContainer">
+
+  <div class="Section">
+
+    <p>
+      Venez passer un moment unique à nos côtés,<br/>
+      encadrés par des professionnels de danse agréés.
+    </p>
+    <div class="button">
+      <p>Voir le planning</p>
+    </div>
+  </div>
+</div>
+<div class="flyer">
+<p>Aurélie Flavigny & Maya </p>
+<h1>COURS</h1>
+<p style="transform: rotate(-45deg); margin:0px; left:20px;">DE</p>
+<h1>DANSE</h1>
+<p>Moderne et classique</p>
+<p style="transform: rotate(-90deg); float: left; margin-top:40px;">ESTRÉES-SAINT-DENIS</p>
+<p style="color: #9EDEE5; font-size: 38px; float: left;">NØVA DANSE</p><br/><br/><br/><br/><br/>
+<p style="color: #F3EF0A; font-size: 28px; float: left; "> Salle Boulanger et Multisport</p><br/><br/><br/><br/>
+<p style=" font-size: 28px; float: left; margin-left: 300px; ">Lundi<br/>
+Mercredi<br/>
+Samedi<br/></p>
+<p style="margin-top: 150px;">Inscription toute l’année</p>
+ <div class="button" style="right: auto; margin-left: 300px; margin-top: 20px;">
+      <p>Voir nos offres</p>
+    </div>
+</div>
+
+
+
 
 
 
@@ -380,6 +503,25 @@ snacks à l’acceuil.</p>
   }, { threshold: 0.1 });
 
   observer.observe(geometry);
+});
+//flyer animation
+document.addEventListener('DOMContentLoaded', () => {
+    const flyer = document.querySelector('.flyer');
+
+    function handleScroll() {
+        const rect = flyer.getBoundingClientRect();
+        const windowHeight = window.innerHeight;
+
+        // Vérifie si la div est visible dans la fenêtre
+        if (rect.top < windowHeight && rect.bottom > 0) {
+            const progress = 1 - (rect.top / windowHeight); // 0 à 1 selon le scroll
+            flyer.style.transform = `translateY(${50 - 50 * progress}px)`; // bouge de 50px vers le haut
+            flyer.style.opacity = progress; // devient progressivement visible
+        }
+    }
+
+    window.addEventListener('scroll', handleScroll);
+    handleScroll(); // au cas où elle est déjà visible au chargement
 });
 
 
