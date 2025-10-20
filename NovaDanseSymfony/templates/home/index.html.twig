@@ -76,6 +76,15 @@ img{
     text-align: center;
     margin-top: 20px;
     margin: 20px 20px;
+    animation: dissolveIn 2s ease-in-out;
+}
+@keyframes dissolveIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }
 .menu-icon {
     display: none; /* Caché par défaut */
@@ -101,6 +110,7 @@ img{
 
 h1{
     margin-left: 20px;
+    color: #A1E1BC;
     font-size: 64px;
     font-weight: normal;
     padding:30px;
@@ -244,6 +254,7 @@ h1{
 }
 .SectionsContainer {
   display: grid;
+  margin:20px;
   grid-template-columns: 1fr auto; /* texte à gauche, bouton à droite */
   gap: 20px; /* espace entre texte et bouton */
   margin-bottom: 40px;
@@ -306,17 +317,7 @@ h1{
     font-weight: lighter;
     
 }
-.flyer{
-    background-image: url('{{ asset('Pictures/graceful-ballerina-in-white-tutu-dancing-on-pointe-against-black-background-png.webp') }}');
-    background-size: contain;  /* l'image sera entièrement visible */
-    background-repeat: no-repeat;
-    background-position: right center; /* positionne l'image en haut à gauche */
-    transform: translateY(50px); /* position de départ décalée */
-    opacity: 0; /* invisible au départ */
-    transition: transform 0.6s ease-out, opacity 0.6s ease-out;
 
-
-}
 .flyer h1{
     text-align: center;
     font-size: 180px;
@@ -325,6 +326,46 @@ h1{
     padding-top:0px;
     color: blue;
 
+}
+.flyer {
+  position: relative;
+  max-width: 100%;
+
+  padding: 20px;
+  color: white;
+  overflow: hidden; /* pour éviter que l'image déborde */
+}
+
+.flyer-bg {
+  position: absolute;
+  top: 0;
+  left: 100px;
+  width: 90%;
+  height: 90%;
+  object-fit: contain; /* l'image couvre tout le bloc */
+  z-index: -1; /* passe l'image derrière le contenu */
+  opacity: 0.8; /* facultatif, pour laisser le texte bien lisible */
+   transition: transform 1.2s ease-out, opacity 1s ease-out;
+}
+.anim-img, .anim-top, .anim-left {
+  opacity: 0;
+  transition: transform 0.4s ease-out, opacity 0.4s ease-out;
+}
+.FAQ{
+    margin: 20px;
+    padding: 20px;
+    max-width: 100%;
+}
+.separator {
+    height: 1px;
+    background-color: white;
+    margin: 10px 0;
+    width: 100%;
+    margin-top: 10px;
+}
+.fa-solid {
+    float: right;
+    margin-top: 5px;
 }
 
         
@@ -350,7 +391,7 @@ min-height: auto;
        
         <li><a href="">A propos de nous</a></li>
         <li><a href="">Cours/planning</a></li>
-        <li><a href="">Acceuil</a></li>
+        <li><a href="">Accueil</a></li>
         
     </ul>
     <div class="menu-icon" onclick="toggleMenu()">
@@ -412,7 +453,7 @@ min-height: auto;
   <div class="cell cell-tr"><div class="shape shape2"><p>DANSE<br/>MODERNE<Br/>ADULTE</p></div></div>
   <div class="cell cell-bl"><div class="shape shape3"><p>DANSE<br/>CLASSIQUE<Br/>DÉS 8 ANS</p></div></div>
   <div class="cell cell-br"><div class="shape shape4"><p>DANSE<br/>MODERNE<Br/>DÉS 11 ANS</p></div></div>
-</div>
+</div><br/><br/>
 <h1>Des studios de danse,<br/>
 pour tout le monde</h1>
 <div class="SectionsContainer">
@@ -442,13 +483,14 @@ s’unir en dansant </h1>
     </div>
   </div>
 </div>
-<div class="flyer">
-<p>Aurélie Flavigny & Maya </p>
-<h1>COURS</h1>
+<div class="flyer flyer-geometry">
+<img src="{{ asset('Pictures/graceful-ballerina-in-white-tutu-dancing-on-pointe-against-black-background-png.webp') }}" alt="Flyer Nova Danse" class="flyer-bg anim-img">
+<p style="color: #f5e6ad;">Aurélie Flavigny & Maya </p>
+<h1 class="anim-top">COURS</h1>
 <p style="transform: rotate(-45deg); margin:0px; left:20px;">DE</p>
-<h1>DANSE</h1>
-<p>Moderne et classique</p>
-<p style="transform: rotate(-90deg); float: left; margin-top:40px;">ESTRÉES-SAINT-DENIS</p>
+<h1 class="anim-top">DANSE</h1>
+<p >Moderne et classique</p>
+<p class="anim-left" style="transform: rotate(-90deg); float: left; margin-top:40px;">ESTRÉES-SAINT-DENIS</p>
 <p style="color: #9EDEE5; font-size: 38px; float: left;">NØVA DANSE</p><br/><br/><br/><br/><br/>
 <p style="color: #F3EF0A; font-size: 28px; float: left; "> Salle Boulanger et Multisport</p><br/><br/><br/><br/>
 <p style=" font-size: 28px; float: left; margin-left: 300px; ">Lundi<br/>
@@ -460,6 +502,17 @@ Samedi<br/></p>
     </div>
 </div>
 
+<div class="FAQ">
+<h1>Foire aux questions</h1><br/>
+<p>Quels sont les âges recommandés pour commencer la danse classique et moderne ?<i class="fa-solid fa-chevron-down"></i></p><br/>
+<div class="separator" ></div>
+<p>Où sont situés les studios ?<i class="fa-solid fa-chevron-down"></i></p><br/>
+<div class="separator" ></div>
+<p>J'ai plein de questions, je peux parler à quelqu'un ?<i class="fa-solid fa-chevron-down"></i></p><br/>
+<div class="separator" ></div>
+
+
+
 
 
 
@@ -470,28 +523,36 @@ Samedi<br/></p>
   const shapes = document.querySelectorAll('.shape');
   const geometry = document.querySelector('.geometry');
 
-  // Translation initiale hors écran
+  // 👇 Tableau de direction (X, Y) pour chaque shape
+  // index 0 = shape 1, index 1 = shape 2, etc.
+  const shapeDirections = [
+    { x: -100, y: -100 }, // shape 1 : diagonale haut gauche
+    { x:  100, y:   0 },  // shape 2 : horizontale droite
+    { x: -100, y:   0 },  // shape 3 : horizontale gauche
+    { x:  100, y:  100 }  // shape 4 : diagonale bas droite
+  ];
+
+  // 📍 Position initiale hors écran
   shapes.forEach((shape, i) => {
-    const direction = (i % 2 === 0) ? -100 : 100;
-    shape.style.transform = `translateX(${direction}px)`;
+    const dir = shapeDirections[i] || { x: 0, y: 0 };
+    shape.style.transform = `translate(${dir.x}px, ${dir.y}px)`;
     shape.style.opacity = 0;
   });
 
-  // Intersection Observer pour détecter quand la div entre dans le viewport
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
-        // Animation légère au scroll
+
         function updateShapes() {
-          const scrollTop = window.scrollY;
           const rect = geometry.getBoundingClientRect();
           const offsetY = Math.min(Math.max(window.innerHeight - rect.top, 0), 600);
           const progress = offsetY / 600;
 
           shapes.forEach((shape, i) => {
-            const direction = (i % 2 === 0) ? -100 : 100;
-            const move = direction * (1 - progress) * 0.5;
-            shape.style.transform = `translateX(${move}px)`;
+            const dir = shapeDirections[i] || { x: 0, y: 0 };
+            const moveX = dir.x * (1 - progress) * 0.5;
+            const moveY = dir.y * (1 - progress) * 0.5;
+            shape.style.transform = `translate(${moveX}px, ${moveY}px)`;
             shape.style.opacity = progress;
           });
         }
@@ -504,27 +565,61 @@ Samedi<br/></p>
 
   observer.observe(geometry);
 });
+
 //flyer animation
 document.addEventListener('DOMContentLoaded', () => {
-    const flyer = document.querySelector('.flyer');
+  const flyerImg = document.querySelector('.anim-img');
+  const flyerTops = document.querySelectorAll('.anim-top');
+  const flyerLeft = document.querySelector('.anim-left');
+  const flyerGeometry = document.querySelector('.flyer-geometry');
 
-    function handleScroll() {
-        const rect = flyer.getBoundingClientRect();
-        const windowHeight = window.innerHeight;
+  // Position initiale hors écran
+  flyerImg.style.transform = 'translateX(100px)';
+  flyerImg.style.opacity = 0;
 
-        // Vérifie si la div est visible dans la fenêtre
-        if (rect.top < windowHeight && rect.bottom > 0) {
-            const progress = 1 - (rect.top / windowHeight); // 0 à 1 selon le scroll
-            flyer.style.transform = `translateY(${50 - 50 * progress}px)`; // bouge de 50px vers le haut
-            flyer.style.opacity = progress; // devient progressivement visible
+  flyerTops.forEach(el => {
+    el.style.transform = 'translateY(-100px)';
+    el.style.opacity = 0;
+  });
+
+  flyerLeft.style.transform = 'translateX(-100px)';
+  flyerLeft.style.opacity = 0;
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+
+        function updateFlyer() {
+          const rect = flyerGeometry.getBoundingClientRect();
+          const offsetY = Math.min(Math.max(window.innerHeight - rect.top, 0), 600);
+          const progress = offsetY / 600;
+
+          // IMAGE
+          const moveImg = 200 * (1 - progress) * 0.6;
+          flyerImg.style.transform = `translateX(${moveImg}px)`;
+          flyerImg.style.opacity = progress;
+
+          // TITRES
+          flyerTops.forEach(el => {
+            const moveTop = -100 * (1 - progress) * 0.5;
+            el.style.transform = `translateY(${moveTop}px)`;
+            el.style.opacity = progress;
+          });
+
+          // TEXTE GAUCHE
+          const moveLeft = -100 * (1 - progress) * 0.5;
+          flyerLeft.style.transform = `translateX(${moveLeft}px) rotate(-90deg)`;
+          flyerLeft.style.opacity = progress;
         }
-    }
 
-    window.addEventListener('scroll', handleScroll);
-    handleScroll(); // au cas où elle est déjà visible au chargement
+        updateFlyer();
+        window.addEventListener('scroll', updateFlyer);
+      }
+    });
+  }, { threshold: 0.5 });
+
+  observer.observe(flyerGeometry);
 });
-
-
 </script>
 
     
