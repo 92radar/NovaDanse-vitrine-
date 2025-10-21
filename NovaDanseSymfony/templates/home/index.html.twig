@@ -440,7 +440,7 @@ h1{
     
     }
 
-.carrousel{ position : relative; margin:20px; padding:20px; max-width: 80%; min-height: 70px; border: 1px solid white; border-radius: 70px; display: flex; align-items: center; justify-content: space-between; padding: 0 20px; } 
+.carrousel{ position : relative;  padding:20px; max-width: 80%; border: 1px solid white; border-radius: 70px; display: flex; align-items: center; justify-content: space-between; padding: 0 20px;backdrop-filter: blur(10px); background: rgba(255, 255, 255, 0.1); box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);} 
 .carrousel ul {
   display: flex;
 
@@ -481,22 +481,30 @@ h1{
 .courses-image {
     flex: 0.5;
     margin-right: 20px;
+    height:700px;
+    
 
 
 }
 
 .sticky {
     position: sticky;
-    top:0; /* distance du haut de la fenêtre */
+    top:10px; /* distance du haut de la fenêtre */
     
     z-index:1;
     display: flex; 
     padding: 0 20px;
 
 }
+.sticky-wrapper {
+  height: 300px;
+  width: 80%;
+/* le sticky s’arrête avant la fin */
+}
 
 .courses {
   display: none;
+  margin-top: -200px; 
 
 }
 
@@ -700,6 +708,8 @@ Document à compléter et à fournir :
     </div>
 
 </div>
+
+<div class="sticky-wrapper">
 <div class="carrousel sticky">
 <h1>COURS</h1>
 <ul>
@@ -708,8 +718,11 @@ Document à compléter et à fournir :
   <li data-tab="preado">Pré-ado</li>
   <li data-tab="adultes">Adultes</li>
 </ul>
-
 </div>
+</div>
+
+
+
 
 
 <div class="courses eveil">
@@ -949,7 +962,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const startOffset = carrousel.offsetTop; // point où il devient sticky
   const totalScroll = 600; // distance totale pour l'animation
-  const maxTranslateX = window.innerWidth * 0.15; // translation max
+  const maxTranslateX = window.innerWidth * 0.25; // translation max
 
   function onScroll() {
     const scrollY = window.scrollY;
