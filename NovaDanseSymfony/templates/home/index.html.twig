@@ -8,7 +8,8 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Helvetica', sans-serif;
+    font-family: 'dongle', sans-serif;
+
 
 }
 
@@ -109,6 +110,7 @@ img{
 }
 
 h1{
+   font-family: "Lilita One", sans-serif;
     margin-left: 20px;
     color: #A1E1BC;
     font-size: 64px;
@@ -297,6 +299,7 @@ h1{
     margin:20px;
 }
 
+
 .button::after {
     content: '';
     position: absolute;
@@ -367,6 +370,132 @@ h1{
     float: right;
     margin-top: 5px;
 }
+.card-container {
+  display: flex;
+  justify-content: center;
+  gap: 100px;
+  flex-wrap: wrap;
+}
+
+.card {
+  margin: auto;
+}
+
+/* Conteneur de l'image */
+.card-image {
+  position: relative;
+  width: 400px;
+  height: 400px;
+  margin: 10px 10px;
+ /* évite que le ::after dépasse */
+}
+
+/* Image */
+.card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 0;
+
+}
+
+/* Calque au-dessus de l'image */
+.card-image::after {
+   content: '';
+    position: absolute;
+    top: 10px;       /* décalage vertical du calque */
+    left: 10px;      /* décalage horizontal du calque */
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, #CE61C2, #0088FF);
+ /* doit correspondre au bouton */
+    z-index: -1;         /* derrière le bouton */
+    pointer-events: none; /* ne bloque pas le clic */
+    transition: all 0.2s;
+}
+.card p {
+    font-size: 24px;
+    font-weight: lighter;
+    padding: 10px;
+
+    color: white;
+}
+
+.adhesion{
+  position:relative;
+  display:flex;
+  flex-direction:column;
+  flex-wrap:wrap;
+  margin-bottom:0px;
+}
+.adhesion p {
+  margin-bottom: 1rem;
+}
+
+
+.adhesion .button{
+    position:absolute;
+    bottom:0;
+    right:0;
+    
+    }
+
+.carrousel{ position : relative; margin:20px; padding:20px; max-width: 80%; min-height: 70px; border: 1px solid white; border-radius: 70px; display: flex; align-items: center; justify-content: space-between; padding: 0 20px; } 
+.carrousel ul {
+  display: flex;
+
+
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  position: relative;
+}
+.carrousel ul li { display: inline-block; flex:1; padding: 20px; font-size: 16px; /* Taille de police plus petite pour les autres éléments */ font-weight: lighter; z-index: 1; }
+.carrousel .selector{
+  position: absolute;
+  top: -10%;           /* dépasse un peu vers le haut */
+  left: 0;
+  width: calc(100% / 4); /* 4 onglets -> 25% ; calc permet s'adapter */
+  height: 120%;         /* plus grand que la barre d'onglets */
+  border-radius: 70px;
+  border: 2px solid white;
+  background: linear-gradient(90deg, #0088FF, #CE61C2);
+  transition: left 0.28s cubic-bezier(.2,.8,.2,1), width 0.28s;
+  z-index: 0; /* dessous du texte mais au-dessus du fond */
+  box-shadow: 0 8px 20px rgba(12,125,255,0.15);
+  pointer-events: none; /* pour que les clics passent aux li */
+}
+
+.courses {
+    display: flex;
+    align-items: center;
+    margin: 20px;
+    padding: 20px;
+    max-width: 100%;
+    min-height: 300px;
+
+}
+.courses-image {
+    flex: 0.5;
+    margin-right: 20px;
+}
+
+.sticky {
+    position: sticky;
+    top:0px; /* distance du haut de la fenêtre */
+    z-index: 10; /* pour s'assurer que ça reste au-dessus des autres éléments */
+
+}
+
+.courses {
+  display: none;
+}
+
+.courses.active {
+  display: flex; /* ou block selon ton layout */
+}
+
+
 
         
 @media (max-width: 900px) {
@@ -380,6 +509,16 @@ h1{
         max-width: 100%;
 min-height: auto; 
     }
+     .adhesion {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* aligne le texte et le bouton à gauche */
+  }
+
+  .adhesion .button {
+    position: static; /* repasse dans le flux normal */
+    margin-top: 1rem; /* espace au-dessus du bouton */
+  }
 
 }
 </style>
@@ -449,10 +588,10 @@ min-height: auto;
 
 <h1>VOTRE PREMIER COUR D’ESSAI OFFERT</h1>
 <div class="geometry">
-  <div class="cell cell-tl"><div class="shape shape1"><p>ÉVEIL<br/>DÉS 4 ANS</p></div></div>
-  <div class="cell cell-tr"><div class="shape shape2"><p>DANSE<br/>MODERNE<Br/>ADULTE</p></div></div>
-  <div class="cell cell-bl"><div class="shape shape3"><p>DANSE<br/>CLASSIQUE<Br/>DÉS 8 ANS</p></div></div>
-  <div class="cell cell-br"><div class="shape shape4"><p>DANSE<br/>MODERNE<Br/>DÉS 11 ANS</p></div></div>
+  <div class="cell cell-tl"><div class="shape shape1"><p><span style="color:#15BCE6;">ÉVEIL</span><br/>DÉS 4 ANS</p></div></div>
+  <div class="cell cell-tr"><div class="shape shape2"><p><span style="color:#15BCE6;">DANSE</span><br/><span style="color:#E26F04;">MODERNE<Br/>ADULTE</span></p></div></div>
+  <div class="cell cell-bl"><div class="shape shape3"><p><span style="color:#E26F04;">DANSE</span><br/>CLASSIQUE<Br/><span style="color:#15BCE6;">DÉS 6 ANS</span></p></div></div>
+  <div class="cell cell-br"><div class="shape shape4"><p><span style="color:#15BCE6;">DANSE</span><br/><span style="color:#E26F04;">MODERNE</span><Br/>DÉS 11 ANS</p></div></div>
 </div><br/><br/>
 <h1>Des studios de danse,<br/>
 pour tout le monde</h1>
@@ -510,6 +649,98 @@ Samedi<br/></p>
 <div class="separator" ></div>
 <p>J'ai plein de questions, je peux parler à quelqu'un ?<i class="fa-solid fa-chevron-down"></i></p><br/>
 <div class="separator" ></div>
+
+
+</div>
+<div class="localisation">
+<h1>Où nous trouver ?</h1>
+<div class="card-container">
+<div class="card">
+<div class="card-image">
+<img src="{{ asset('Pictures/pexels-cottonbro-10637401.jpg') }}" alt="Plan Nova Danse">
+</div><br/>
+<p>Salle Boulenger</p>
+</div>
+<div class="card">
+<div class="card-image">
+<img src="{{ asset('Pictures/pexels-anastasia-shuraeva-8935597.jpg') }}" alt="Plan Nova Danse">
+</div><br/>
+<p>Salle Multisport</p>
+</div><br/>
+
+<div class="adhesion">
+<h1>Adhésion 2025/2026 - NØVADANSE</h1>
+<p style="margin:40px 40px;">Vous pouvez dès à présent réserver votre place et régler votre inscription via<br/> Hello Asso afin de préparer sereinement la rentrée. 
+
+Pour plus de détails<br/> sur nos modalités d'adhésion consultez nos tarifs et conditions ci-dessous.</p><br/>
+<div class="button" style="margin:40px 40px; float:right;" >
+      <p>
+
+Document à compléter et à fournir :
+<ul>
+
+<li>Certificat médical pour les majeurs </li>
+<li>Questionnaire de santé pour les mineurs</li>
+</ul>
+</p>
+    </div>
+
+</div>
+<div class="carrousel sticky">
+<h1>COURS</h1>
+<ul>
+  <li class="active" data-tab="eveil">Èveil</li>
+  <li data-tab="classique">Classique</li>
+  <li data-tab="preado">Pre-Ado</li>
+  <li data-tab="adultes">Adultes</li>
+</ul>
+
+</div>
+
+
+<div class="courses eveil">
+
+
+        <div class="courses-image">
+            <img src="{{ asset('Pictures/pexels-cottonbro-10640445.jpg') }}" alt="Cours Éveil">
+        </div>
+        <div class="description eveil">
+            <H1>Cours Éveil</h1>
+            <p>Pour les enfants dès 4 ans, initiation ludique à la danse.</p>
+            <p>COURS Eveil 1 Mercredi 17h15 - 18h00 (Mayra)</p>
+
+            <p>Inscription pour les 4-5 ans<br />
+                Tenue obligatoire<br />
+                Licence A de la FFD incluse (24€)</p><br />
+            <strong>64.66€<br />
+                Par échéance<br />
+                (Soit 193.98€ au total)</strong>
+        </div>
+    </div>
+    <div class="courses classique">
+
+
+        <div class="courses-image">
+            <img src="{{ asset('Pictures/pexels-anastasia-shuraeva-8935597.jpg') }}" alt="Cours classique">
+        </div>
+        <div class="description classique">
+            <H1>Cours Classique</h1>
+            <p>Pour les enfants dès 4 ans, initiation ludique à la danse.</p>
+            <p>COURS Classique 1 Mercredi 18h45 - 19h45</p>
+
+            <p>Inscription pour les 7-13 ans<br />
+                Tenue obligatoire<br />
+                Licence A de la FFD incluse (24€)</p><br />
+            <p>Règlement en 3 fois possible</p><br />
+            <strong>71.33€<br />
+                Par échéance<br />
+                (Soit 213.99€ au total)</strong>
+        </div>
+    </div>
+
+
+
+
 
 
 
@@ -620,6 +851,74 @@ document.addEventListener('DOMContentLoaded', () => {
 
   observer.observe(flyerGeometry);
 });
+// animation des onglet du carrousel
+ const tabs = document.querySelectorAll(".carrousel li");
+  const selector = document.createElement("div");
+  selector.classList.add("selector");
+  document.querySelector(".carrousel ul").appendChild(selector);
+
+  tabs.forEach((tab, i) => {
+    tab.addEventListener("click", () => {
+      document.querySelector(".carrousel li.active")?.classList.remove("active");
+      tab.classList.add("active");
+      selector.style.left = `${i * 25}%`;
+    });
+  });
+  // onglet en translation pour le caroussel
+  document.addEventListener('DOMContentLoaded', () => {
+  const carrousel = document.querySelector('.carrousel');
+  if (!carrousel) return;
+
+  const startOffset = carrousel.offsetTop; // point où il devient sticky
+  const totalScroll = 600; // distance totale pour l'animation
+
+  function onScroll() {
+    const scrollY = window.scrollY;
+    const moveDistance = window.innerWidth * 0.2; // toujours collé au bord droit
+
+    if (scrollY >= startOffset) {
+      const progress = Math.min((scrollY - startOffset) / totalScroll, 1); // 0 → 1
+
+      // Phase 1 : translation horizontale
+      const translateX = progress * moveDistance;
+
+      // Applique la translation
+      carrousel.style.transform = `translateX(${translateX}px)`;
+    } else {
+      carrousel.style.transform = `translateX(0px)`;
+    }
+  }
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll); // recalcul dynamique si resize
+  onScroll(); // déclenchement initial
+});
+//activation des onglets 
+document.addEventListener('DOMContentLoaded', () => {
+  const tabs = document.querySelectorAll('.carrousel ul li');
+  const courses = document.querySelectorAll('.courses');
+
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      // --- Met à jour l'état actif du carrousel
+      tabs.forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+
+      // --- Affiche le cours correspondant
+      courses.forEach(course => course.classList.remove('active'));
+      const targetClass = tab.dataset.tab;
+      const targetCourse = document.querySelector(`.courses.${targetClass}`);
+      if (targetCourse) targetCourse.classList.add('active');
+    });
+  });
+
+  // --- Initial : afficher le premier cours
+  courses.forEach(course => course.classList.remove('active'));
+  if (courses[0]) courses[0].classList.add('active');
+});
+
+
+
 </script>
 
     
