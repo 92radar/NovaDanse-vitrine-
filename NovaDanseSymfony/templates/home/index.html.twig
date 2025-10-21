@@ -8,7 +8,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'dongle', sans-serif;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 
 
 }
@@ -450,20 +450,21 @@ h1{
   margin: 0;
   position: relative;
 }
-.carrousel ul li { display: inline-block; flex:1; padding: 20px; font-size: 16px; /* Taille de police plus petite pour les autres éléments */ font-weight: lighter; z-index: 1; }
+.carrousel ul li { display: inline-block; flex:1; text-align:center; padding: 20px; font-size: 16px; /* Taille de police plus petite pour les autres éléments */ font-weight: lighter; z-index: 1; }
 .carrousel .selector{
   position: absolute;
   top: -10%;           /* dépasse un peu vers le haut */
   left: 0;
   width: calc(100% / 4); /* 4 onglets -> 25% ; calc permet s'adapter */
-  height: 120%;         /* plus grand que la barre d'onglets */
-  border-radius: 70px;
+  height: 100%;         /* plus grand que la barre d'onglets */
+  border-radius: 50px;
   border: 2px solid white;
   background: linear-gradient(90deg, #0088FF, #CE61C2);
   transition: left 0.28s cubic-bezier(.2,.8,.2,1), width 0.28s;
   z-index: 0; /* dessous du texte mais au-dessus du fond */
   box-shadow: 0 8px 20px rgba(12,125,255,0.15);
   pointer-events: none; /* pour que les clics passent aux li */
+
 }
 
 .courses {
@@ -474,21 +475,34 @@ h1{
     max-width: 100%;
     min-height: 300px;
 
+   
+
 }
 .courses-image {
     flex: 0.5;
     margin-right: 20px;
+
+
 }
 
 .sticky {
     position: sticky;
-    top:0px; /* distance du haut de la fenêtre */
-    z-index: 10; /* pour s'assurer que ça reste au-dessus des autres éléments */
+    top:0; /* distance du haut de la fenêtre */
+    
+    z-index:1;
+    display: flex; 
+    padding: 0 20px;
 
 }
 
 .courses {
   display: none;
+
+}
+
+.courses ul{
+  margin-left:20px;
+  padding:10px;
 }
 
 .courses.active {
@@ -691,7 +705,7 @@ Document à compléter et à fournir :
 <ul>
   <li class="active" data-tab="eveil">Èveil</li>
   <li data-tab="classique">Classique</li>
-  <li data-tab="preado">Pre-Ado</li>
+  <li data-tab="preado">Pré-ado</li>
   <li data-tab="adultes">Adultes</li>
 </ul>
 
@@ -705,16 +719,22 @@ Document à compléter et à fournir :
             <img src="{{ asset('Pictures/pexels-cottonbro-10640445.jpg') }}" alt="Cours Éveil">
         </div>
         <div class="description eveil">
-            <H1>Cours Éveil</h1>
-            <p>Pour les enfants dès 4 ans, initiation ludique à la danse.</p>
-            <p>COURS Eveil 1 Mercredi 17h15 - 18h00 (Mayra)</p>
+            <H1>Éveil</h1>
+            <ul>
+            <li>Pour les enfants dès 4 ans, initiation ludique à la danse.</li>
+            <li>COURS Eveil 1 Mercredi 17h15 - 18h00 (Mayra)</li>
+            <li>Inscription pour les 4-5 ans</li>
+            <li>Tenue obligatoire</li>
+            <li>Licence A de la FFD incluse (24€)</li>
 
-            <p>Inscription pour les 4-5 ans<br />
-                Tenue obligatoire<br />
-                Licence A de la FFD incluse (24€)</p><br />
+
+          </ul>
+           
+                <div class="button">
             <strong>64.66€<br />
                 Par échéance<br />
                 (Soit 193.98€ au total)</strong>
+                </div>
         </div>
     </div>
     <div class="courses classique">
@@ -724,19 +744,77 @@ Document à compléter et à fournir :
             <img src="{{ asset('Pictures/pexels-anastasia-shuraeva-8935597.jpg') }}" alt="Cours classique">
         </div>
         <div class="description classique">
-            <H1>Cours Classique</h1>
-            <p>Pour les enfants dès 4 ans, initiation ludique à la danse.</p>
-            <p>COURS Classique 1 Mercredi 18h45 - 19h45</p>
+            <H1>Classique</h1>
+            <ul>
+            <li>Pour les enfants dès 4 ans, initiation ludique à la danse.</li>
+            <li>COURS Classique 1 Mercredi 18h45 - 19h45</li>
+            <li>Inscription pour les 7-13 ans</li>
+            <li>Tenue obligatoire</li>
+            <li>Licence A de la FFD incluse (24€)</li>
+            <li>Règlement en 3 fois possible</li>
 
-            <p>Inscription pour les 7-13 ans<br />
-                Tenue obligatoire<br />
-                Licence A de la FFD incluse (24€)</p><br />
-            <p>Règlement en 3 fois possible</p><br />
+          </ul>
+            <div class="button">
             <strong>71.33€<br />
                 Par échéance<br />
                 (Soit 213.99€ au total)</strong>
+                </div>
         </div>
     </div>
+    <div class="courses preado">
+
+
+        <div class="courses-image">
+            <img src="{{ asset('Pictures/pexels-cottonbro-10640395.jpg') }}" alt="Cours classique">
+        </div>
+        <div class="description preado">
+            <H1>Pré-Ado</h1>
+              <ul>
+            <li>Inscriptions pour les 11 - 16 ans</li>
+            <li>COURS PRE-ADO Lundi 17h30 - 19h00 (Aurélie)</li>
+
+            <li>Tenue obligatoire</li>
+            <li>Licence A de la FFD incluse (24€)</li>
+            <li>Règlement en 3 fois possible</li>
+
+
+          </ul>
+            
+            <div class="button">
+            <strong>74.66€<br />
+                Par échéance<br />
+                (Soit 223.98€ au total)</strong>
+                </div>
+        </div>
+    </div>
+ <div class="courses adultes">
+
+
+        <div class="courses-image">
+            <img src="{{ asset('Pictures/pexels-agustina-croce-302580711-13411721.jpg') }}" alt="Cours classique">
+        </div>
+        <div class="description adultes">
+            <H1>Adultes</h1>
+              <ul>
+            <li>Inscriptions à partir de 16 Ans</li>
+            <li>COURS ADULTES Lundi 19h00 - 20h30 (Aurélie)</li>
+
+
+            <li>Licence A de la FFD incluse (24€)</li>
+            <li>Règlement en 3 fois possible</li>
+
+
+          </ul>
+
+          
+            <div class="button">
+            <strong style="text-align:center;">74.66€<br />
+                Par échéance<br />
+                (Soit 223.98€ au total)</strong>
+                </div>
+        </div>
+    </div>
+    <div style="height: 300px;"></div> <!-- Espace de fin de page -->
 
 
 
@@ -864,23 +942,26 @@ document.addEventListener('DOMContentLoaded', () => {
       selector.style.left = `${i * 25}%`;
     });
   });
-  // onglet en translation pour le caroussel
+  //
   document.addEventListener('DOMContentLoaded', () => {
   const carrousel = document.querySelector('.carrousel');
   if (!carrousel) return;
 
   const startOffset = carrousel.offsetTop; // point où il devient sticky
   const totalScroll = 600; // distance totale pour l'animation
+  const maxTranslateX = window.innerWidth * 0.15; // translation max
 
   function onScroll() {
     const scrollY = window.scrollY;
-    const moveDistance = window.innerWidth * 0.2; // toujours collé au bord droit
 
     if (scrollY >= startOffset) {
-      const progress = Math.min((scrollY - startOffset) / totalScroll, 1); // 0 → 1
+      let progress = (scrollY - startOffset) / totalScroll;
+
+      // limite la progression à 1
+      progress = Math.min(progress, 1);
 
       // Phase 1 : translation horizontale
-      const translateX = progress * moveDistance;
+      const translateX = progress * maxTranslateX;
 
       // Applique la translation
       carrousel.style.transform = `translateX(${translateX}px)`;
@@ -890,9 +971,14 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   window.addEventListener('scroll', onScroll, { passive: true });
-  window.addEventListener('resize', onScroll); // recalcul dynamique si resize
-  onScroll(); // déclenchement initial
+  window.addEventListener('resize', () => {
+    // recalcul dynamique si resize
+    maxTranslateX = window.innerWidth * 0.15;
+    onScroll();
+  });
+  onScroll();
 });
+
 //activation des onglets 
 document.addEventListener('DOMContentLoaded', () => {
   const tabs = document.querySelectorAll('.carrousel ul li');
@@ -916,6 +1002,8 @@ document.addEventListener('DOMContentLoaded', () => {
   courses.forEach(course => course.classList.remove('active'));
   if (courses[0]) courses[0].classList.add('active');
 });
+//disparition du carousel
+
 
 
 
