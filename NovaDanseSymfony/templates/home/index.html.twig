@@ -11,6 +11,8 @@
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 
 
+
+
 }
 
 body {
@@ -18,10 +20,13 @@ body {
     height: 100vh; /* Assure que le dégradé couvre toute la hauteur de la fenêtre */
     margin: 0;
     color: white;
+    max-width: 100%;
+    overflow-x: hidden;
 }
 
 nav {
     color: black;
+    max-width: 100%;
    
 
 }
@@ -92,12 +97,16 @@ img{
     flex-direction: column;
     cursor: pointer;
 }
-.menu-icon .bar {
+.menu-icon .bar{
     width: 30px;
     height: 4px;
     background-color: white;
     margin: 4px 0;
     border-radius: 20px;
+}
+.menu-icon .bar:nth-child(2) {
+  width: 20px; /* plus court que les autres */
+   /* ou à gauche/droite selon le style désiré */
 }
 .menu-icon{
     border:1px solid transparent;
@@ -118,50 +127,36 @@ h1{
     padding:30px;
 }
 
-.dates{
-    background:linear-gradient(90deg, #ECEC77, #D099CB);
-    border-radius: 10px;
-    padding: 20px;
-    text-align: center;
-    width: auto;
-    min-width: 100px;
-    height: auto;
-    margin: 20px;
-    display: inline-block;
-    color: black;
-
-}
-.dates h2{
-    font-size: 38px;
-    margin-bottom: 10px;
-    color: black;
-}
-
-
 .container {
-    display: flex; /* Active Flexbox pour aligner les éléments côte à côte */
-    justify-content:start;  /* Ajoute de l'espace entre les éléments */
-    align-items: center; /* Aligne les éléments verticalement */
-    gap: 0; /* Ajoute un espacement entre les éléments */
-    margin: 10px;
+    display: flex;
+    border-radius: 20px;
+    max-width: 100%;
+    margin-left: 40px;               /* marge à gauche */
+            /* arrondis propres */
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1); /* petite ombre douce */
 }
-.Information{
-    background: transparent;
-    border-radius: 10px;
-    padding: 20px;
-    width: 600px;
-    height: auto;
-    min-height: auto;
-    border: 1px solid white;
 
+.dates, .information {
+    padding: 15px 20px;
+    border-radius: 20px;
 }
-.Information p{
-    font-size: 10px;
 
+.dates {
+    text-align: center;
+    background: linear-gradient(90deg, rgb(231, 188, 69), #CE61C2);
+    min-width: 120px;
+    color: black;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
-.Information:hover{
-    background: rgba(255, 255, 255, 0.44);
-    transition: 0.3s;
+.lieu{
+  color:rgb(231, 188, 69);
+}
+.container:hover{
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2); /* ombre plus prononcée au survol */
+    transform: translateX(-10px); /* léger déplacement vers le haut */
+    transition: transform 0.3s, box-shadow 0.3s; /* transition douce */
 }
 
 .geometry{
@@ -354,6 +349,12 @@ h1{
   opacity: 0;
   transition: transform 0.4s ease-out, opacity 0.4s ease-out;
 }
+
+.static{
+     color: #9EDEE5;
+     font-size: 38px; 
+     float: left;
+}
 .FAQ{
     margin: 20px;
     padding: 20px;
@@ -387,6 +388,7 @@ h1{
   width: 400px;
   height: 400px;
   margin: 10px 10px;
+  
  /* évite que le ::after dépasse */
 }
 
@@ -421,24 +423,35 @@ h1{
     color: white;
 }
 
-.adhesion{
-  position:relative;
-  display:flex;
-  flex-direction:column;
-  flex-wrap:wrap;
-  margin-bottom:0px;
+
+.container-adhesion {
+  display: flex;
+  flex-wrap: wrap; /* permet le passage à la ligne sur petit écran */
+  gap: 20px; /* espace entre les éléments */
+  margin: 40px;
+  padding:10px;
 }
-.adhesion p {
-  margin-bottom: 1rem;
+
+.text-block {
+  flex: 1 1 300px; /* minimum 300px, prend l'espace restant */
+  min-width: 250px;
+}
+
+.container.button {
+  flex: 0 0 250px; /* largeur fixe sur grand écran */
+  background: #0088FF;
+  color: white;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.button ul {
+  margin: 10px 0 0 20px;
+  padding: 0;
 }
 
 
-.adhesion .button{
-    position:absolute;
-    bottom:0;
-    right:0;
-    
-    }
+
 
 .carrousel{ position : relative;  padding:20px; max-width: 80%; border: 1px solid white; border-radius: 70px; display: flex; align-items: center; justify-content: space-between; padding: 0 20px;backdrop-filter: blur(10px); background: rgba(255, 255, 255, 0.1); box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);} 
 .carrousel ul {
@@ -451,20 +464,20 @@ h1{
   position: relative;
 }
 .carrousel ul li { display: inline-block; flex:1; text-align:center; padding: 20px; font-size: 16px; /* Taille de police plus petite pour les autres éléments */ font-weight: lighter; z-index: 1; }
-.carrousel .selector{
+.carrousel .selector {
   position: absolute;
-  top: -10%;           /* dépasse un peu vers le haut */
+  top: -10%;
   left: 0;
-  width: calc(100% / 4); /* 4 onglets -> 25% ; calc permet s'adapter */
-  height: 100%;         /* plus grand que la barre d'onglets */
+  height: 120%; 
+
   border-radius: 50px;
   border: 2px solid white;
   background: linear-gradient(90deg, #0088FF, #CE61C2);
-  transition: left 0.28s cubic-bezier(.2,.8,.2,1), width 0.28s;
-  z-index: 0; /* dessous du texte mais au-dessus du fond */
+  transition: left 0.28s cubic-bezier(.2,.8,.2,1),
+              width 0.28s cubic-bezier(.2,.8,.2,1);
+  z-index: 0;
   box-shadow: 0 8px 20px rgba(12,125,255,0.15);
-  pointer-events: none; /* pour que les clics passent aux li */
-
+  pointer-events: none;
 }
 
 .courses {
@@ -496,15 +509,17 @@ h1{
     padding: 0 20px;
 
 }
+
+
 .sticky-wrapper {
-  height: 300px;
+  height: 350px;
   width: 80%;
 /* le sticky s’arrête avant la fin */
 }
 
 .courses {
   display: none;
-  margin-top: -200px; 
+  margin-top: -240px; 
 
 }
 
@@ -516,32 +531,364 @@ h1{
 .courses.active {
   display: flex; /* ou block selon ton layout */
 }
+.helloasso p{
+    font-size: 28px;
+    font-weight: regular;
+    color: black;
+}
 
+.CTA-button{
+    background-color:transparent;
+    height: 300px;
+    color: white;
+    padding: 15px 30px;
+    border: none;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 20px;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px;
+    padding: 20px;
+    max-width: 100%;
+
+}
+form input{
+    margin: 10px;
+    padding: 10px;
+    width: 300px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+form textarea{
+    margin: 10px;
+    padding: 10px;
+    width: 300px;
+    height: 100px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    resize: vertical;
+}
+form button{
+     display: inline-block;
+    position: relative; /* nécessaire pour ::after */
+    background-color: rgb(255, 255, 255);
+    color: black;
+    padding: 10px 20px;
+    border: 1px solid white;
+    cursor: pointer;
+    margin: 20px;
+    transition: background-color 0.3s, transform 0.2s;
+    right: 20px;
+}
+
+form button::after{
+   content: '';
+    position: absolute;
+    top: 5px;       /* décalage vertical du calque */
+    left: 5px;      /* décalage horizontal du calque */
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, #CE61C2, #0088FF);
+ /* doit correspondre au bouton */
+    z-index: -1;         /* derrière le bouton */
+    pointer-events: none; /* ne bloque pas le clic */
+    transition: all 0.2s;
+}
+footer {
+  position:relative;
+  bottom:0px;
+  left:0px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start; /* aligne le haut */
+  flex-wrap: wrap; /* responsive si trop petit */
+  width: 100%;
+
+  background-color: rgb(9, 12, 158);
+  padding: 0;
+  margin: 0;
+  font-size: 14px;
+  color: rgb(205, 207, 209);
+}
+.spacer {
+    position: absolute;
+    display: flex;
+  justify-content: space-between;
+  align-items: flex-start; /* aligne le haut */
+  flex-wrap: wrap; /* responsive si trop petit */
+  width: 100%;
+
+  background-color: rgb(9, 12, 158);
+ /* ajuste selon la hauteur souhaitée */
+}
+
+.footer-left h1 {
+  margin: 0;
+  font-size: 28px;
+  color: white;
+  text-align: left;
+}
+
+.footer-center{
+    text-align: center;
+    flex: 1;
+    margin: 10px 20px;
+}
+
+footer a {
+  
+   
+
+    text-decoration: none;
+    color:rgb(185, 186, 187);
+    font-weight: lighter;
+}
+
+
+
+footer button {
+    color: #6c757d;
+}
+
+footer a:hover {
+
+    text-decoration: underline;
+    color: #f8f9fa;
+}
+
+footer .fas {
+    color: #6c757d;
+
+    font-size: 20px;
+    transition: color 0.3s;
+}
+
+footer .top {
+    color: #6c757d;
+
+
+}
+
+footer a:hover {
+    color: rgb(160, 143, 131);
+    text-decoration: underline;
+    font-weight: lighter;
+
+}
+
+footer .top:hover {
+    text-decoration: none;
+}
 
 
         
-@media (max-width: 900px) {
+@media (max-width: 1200px) {
     .NavBar ul li:not(:first-child) {
         display:none;
     }
    .menu-icon {
         display: flex; /* Affiche le menu burger */
     }
-    .shape{
-        max-width: 100%;
-min-height: auto; 
-    }
+   
+.container {
+    display: flex;
+    border-radius: 20px;
+    max-width: 100%;
+    margin-left: 20px;               /* marge à gauche */
+            /* arrondis propres */
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1); /* petite ombre douce */
+}
+
+.dates, .information {
+    padding: 10px 25px;
+    border-radius: 20px;
+}
+
+.dates {
+    text-align: center;
+    background: linear-gradient(90deg, rgb(231, 188, 69), #CE61C2);
+    min-width: 90px;
+    color: black;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.lieu{
+  color:rgb(231, 188, 69);
+}
+.container p{
+    font-size: 14px;
+}
      .adhesion {
     display: flex;
     flex-direction: column;
-    align-items: flex-start; /* aligne le texte et le bouton à gauche */
+    align-items: flex-start;
+
+  }
+   .adhesion h1 {
+    font-size: 34px; /* taille de police réduite pour les petits écrans */
+    margin-bottom: 0.5rem; /* espace réduit sous le titre */
   }
 
-  .adhesion .button {
-    position: static; /* repasse dans le flux normal */
-    margin-top: 1rem; /* espace au-dessus du bouton */
-  }
 
+ 
+
+h1{
+   font-family: "Lilita One", sans-serif;
+    margin-left: 20px;
+    color: #A1E1BC;
+    font-size: 54px;
+    font-weight: normal;
+    padding:30px;
+}
+.carrousel h1{
+    display:none;
+}
+.carrousel{ position : relative;  padding:20px;min-height:30px; max-width: 100%; border: 1px solid white; border-radius: 70px; display: flex; align-items: center; justify-content: flex-start; padding: 0 20px;backdrop-filter: blur(10px); background: rgba(255, 255, 255, 0.1); box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);} 
+.carrousel ul {
+  display: flex;
+
+
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  position: relative;
+}
+.carrousel ul li { display: inline-block; flex:1; text-align:center; padding: 20px; font-size: 14px; /* Taille de police plus petite pour les autres éléments */ font-weight: lighter; z-index: 1; }
+.carrousel .selector{
+  position: absolute;
+  top: 0;           /* dépasse un peu vers le haut */
+  left: 0;
+  width: 31%; 
+  height: 100%;         /* plus grand que la barre d'onglets */
+  border-radius: 40px;
+
+  border: 2px solid white;
+  background: linear-gradient(90deg, #0088FF, #CE61C2);
+  transition: left 0.28s cubic-bezier(.2,.8,.2,1), width 0.28s;
+  z-index: 0; /* dessous du texte mais au-dessus du fond */
+  box-shadow: 0 8px 20px rgba(12,125,255,0.15);
+  pointer-events: none; /* pour que les clics passent aux li */
+
+}
+
+.sticky-wrapper {
+  height: 200px;
+  max-width: 100%;
+
+
+}
+.sticky {
+display:block;
+position: sticky;
+    
+    z-index:1;
+    display: flex; 
+    padding: 0 20px;
+}
+.courses {
+  display: none;
+  margin-top: -100px; 
+
+}
+
+.courses-image {
+    display:none;
+}
+
+}
+@media (max-width: 600px) {
+   .shape{
+        max-width: 100%;
+        min-height: auto; 
+    }
+    .geometry{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  width: 400px;
+  height: 300px;
+  margin: 40px auto;
+  margin-top:50px;
+  gap: 0;
+  overflow: visible;
+  max-width: 100%;
+  
+}
+.geometry p{
+    position: absolute;
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    z-index: 1;
+}
+  .card-image {
+  position: relative;
+  width: 50%;
+  height: 50%;
+  margin: 20px 20px;
+  
+ /* évite que le ::after dépasse */
+}
+     .flyer p{
+    text-align: center;
+    font-size: 18px;
+    margin-bottom: 20px;
+    font-weight: lighter;
+    
+}
+
+.flyer h1{
+    text-align: center;
+    font-size: 80px;
+    font-weight: bold;
+    padding:0px;
+    padding-top:0px;
+    color: blue;
+
+}
+.flyer {
+  position: relative;
+  max-width: 100%;
+
+  padding: 20px;
+  color: white;
+  overflow: hidden; /* pour éviter que l'image déborde */
+}
+
+
+.flyer-bg {
+  position: absolute;
+  top: 0;
+  left: 100px;
+  width: 60%;
+  height: 60%;
+  object-fit: contain; /* l'image couvre tout le bloc */
+  z-index: -1; /* passe l'image derrière le contenu */
+  opacity: 0.8; /* facultatif, pour laisser le texte bien lisible */
+   transition: transform 1.2s ease-out, opacity 1s ease-out;
+}
+p.lieu{
+  margin-left:100px;
+}
+.anim-img, .anim-top, .anim-left {
+  opacity: 0;
+  transition: transform 0.4s ease-out, opacity 0.4s ease-out;
+}
 }
 </style>
 
@@ -575,35 +922,35 @@ min-height: auto;
         <h2>06</h2>
         <p>Juin, 2025</p>
     </div>
-    <div class="Information">
-        <h3>FORUM DES ASSOCIATIONS</h3><br/>
-        <p>10:00 - 17:00 </p>
-        <p style= "float:right;">ESPLANADE DE LA SALLE POLYVALENTE</p><br/>
+    <div class="information">
+        <h3>FORUM DES ASSOCIATIONS</h3>
+        <p>10:00 - 17:00</p>
+        <p class="lieu">ESPLANADE DE LA SALLE POLYVALENTE</p>
     </div>
-</div>
+</div><br/>
 <div class="container">
     <div class="dates">
         <h2>15</h2>
         <p>Juin, 2025</p>
     </div>
-    <div class="Information">
-        <h3>REPRISE DES COURS MODERN</h3><br/>
+    <div class="information">
+        <h3>REPRISE DES COURS MODERN</h3>
         <p>17:30 - 19:00 : PRE ADOS<br/>
             19:00 - 20:30 : ADULTE </p>
-        <p style= "float:right;">SALLE BOULANGER</p><br/>
+        <p class="lieu">SALLE BOULANGER</p><br/>
     </div>
-</div>
+</div><br/>
 <div class="container">
     <div class="dates">
         <h2>17</h2>
         <p>Juin, 2025</p>
     </div>
-    <div class="Information">
+    <div class="information">
         <h3>REPRISE DES COURS CLASSIQUE</h3><br/>
         <p>17:30 - 18:15 : PRE EVEIL<br/>
 18H15-19H15 : CLASSIQUE 1<br/>
 19H15-20H15 : CLASSIQUE2 </p>
-        <p style= "float:right;">
+        <p class="lieu">
         SALLE BOULANGER</p><br/>
     </div>
 </div>
@@ -650,15 +997,23 @@ s’unir en dansant </h1>
 <h1 class="anim-top">COURS</h1>
 <p style="transform: rotate(-45deg); margin:0px; left:20px;">DE</p>
 <h1 class="anim-top">DANSE</h1>
-<p >Moderne et classique</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Moderne et classique</p>
 <p class="anim-left" style="transform: rotate(-90deg); float: left; margin-top:40px;">ESTRÉES-SAINT-DENIS</p>
-<p style="color: #9EDEE5; font-size: 38px; float: left;">NØVA DANSE</p><br/><br/><br/><br/><br/>
-<p style="color: #F3EF0A; font-size: 28px; float: left; "> Salle Boulanger et Multisport</p><br/><br/><br/><br/>
-<p style=" font-size: 28px; float: left; margin-left: 300px; ">Lundi<br/>
+<p class="static">NØVA DANSE</p><br/><br/><br/><br/><br/>
+<p class="lieu" style="color: #F3EF0A; font-size: 28px; float: left; "> Salle Boulanger et Multisport</p><br/><br/><br/><br/>
+<p  style=" font-size: 28px;  ">Lundi<br/>
 Mercredi<br/>
 Samedi<br/></p>
 <p style="margin-top: 150px;">Inscription toute l’année</p>
- <div class="button" style="right: auto; margin-left: 300px; margin-top: 20px;">
+</div>
+
+</div>
+<div class="Section" style="position:relative; margin-bottom:40px;"> 
+    <p>
+      Découvrez nos offres d’abonnement adaptées à vos besoins<br/>
+      et profitez de cours de danse de qualité à des tarifs avantageux.
+    </p>
+ <div class="button" style=" margin:40px;">
       <p>Voir nos offres</p>
     </div>
 </div>
@@ -690,24 +1045,27 @@ Samedi<br/></p>
 <p>Salle Multisport</p>
 </div><br/>
 
-<div class="adhesion">
-<h1>Adhésion 2025/2026 - NØVADANSE</h1>
-<p style="margin:40px 40px;">Vous pouvez dès à présent réserver votre place et régler votre inscription via<br/> Hello Asso afin de préparer sereinement la rentrée. 
 
-Pour plus de détails<br/> sur nos modalités d'adhésion consultez nos tarifs et conditions ci-dessous.</p><br/>
-<div class="button" style="margin:40px 40px; float:right;" >
-      <p>
+        <h1>Adhésion 2025/2026 - NØVADANSE</h1>
+       <div class="container-adhesion">
+  <div class="text-block">
+    <p>
+      Vous pouvez dès à présent réserver votre place et régler votre inscription via<br/>
+      Hello Asso afin de préparer sereinement la rentrée. 
+      Pour plus de détails<br/> sur nos modalités d'adhésion consultez nos tarifs et conditions ci-dessous.
+    </p>
+  </div>
 
-Document à compléter et à fournir :
-<ul>
-
-<li>Certificat médical pour les majeurs </li>
-<li>Questionnaire de santé pour les mineurs</li>
-</ul>
-</p>
-    </div>
-
+  <div class="button">
+    <p>Document à compléter et à fournir :</p>
+    <ul>
+      <li>Certificat médical pour les majeurs</li>
+      <li>Questionnaire de santé pour les mineurs</li>
+    </ul>
+  </div>
 </div>
+
+
 
 <div class="sticky-wrapper">
 <div class="carrousel sticky">
@@ -724,7 +1082,7 @@ Document à compléter et à fournir :
 
 
 
-
+<div class="courses-wrapper">
 <div class="courses eveil">
 
 
@@ -827,10 +1185,59 @@ Document à compléter et à fournir :
                 </div>
         </div>
     </div>
-    <div style="height: 300px;"></div> <!-- Espace de fin de page -->
+</div>
+    <div class="CTA-button" >
+    <p style="text-align:center; margin:40px;">Rendez vous sur Hello Asso</p>
+    </div>
+
+    <div class="contact-form">
+    <h1>Contactez-nous</h1>
+    <form action="#" method="post">
+
+        <input type="text" id="name" name="name" placeholder="Votre nom" required>
 
 
+        <input type="email" id="email" name="email"placeholder="Votre email"  required>
 
+
+        <textarea id="message" name="message" placeholder="Demandez nous ce que vous voulez.." required></textarea>
+
+        <button type="submit">Envoyer</button>
+    </form>
+    </div>
+ <!-- Espace de fin de page -->
+  <footer>
+  <div class="spacer" style="flex: 1;">
+   <div class="footer-left">
+            <h1>NØVA DANSE</h1><br />
+            </div>
+             <div class="footer-center">
+
+            <a href="/">Accueil</a> <br /><br />
+            <a href="">Planning</a> <br /><br />
+            <a href="/">A propos de nous</a> <br /><br />
+            <a href="/mentions-legales">Mentions légales & CGU</a> <br /><br />
+            <button type="button" id="change-preferences"
+                style=" bottom: 20px; right: 20px; cursor:pointer; background: none; border: none; color:white; text-decoration: underline; font-size: 1em; padding: 0; font-family: 'marianne';">
+                Modifier mes préférences
+            </button> <br /><br />
+            <div class="icon-footer">
+                <a href="https://www.instagram.com/nova.danse/?igsh=MXVjOHVta2wzajUzMg==" target="_blank"
+                    rel="noopener">
+                    <i class="fab fa-instagram fa-2x icon"></i>
+                </a>
+            </div>
+            <br /><br />
+            <p>&copy; 2025 NØVA DANSE. All rights reserved.</p><br />
+            <i class="fas fa-chevron-up"></i><br />
+            <a href="#top" class="top">TOP</a>
+            </div>
+        </footer>
+
+
+{% endblock %}
+         {% block javascripts %}
+            
 
 
 
@@ -955,40 +1362,41 @@ document.addEventListener('DOMContentLoaded', () => {
       selector.style.left = `${i * 25}%`;
     });
   });
-  //
+  // translation du carrousel
   document.addEventListener('DOMContentLoaded', () => {
   const carrousel = document.querySelector('.carrousel');
   if (!carrousel) return;
 
   const startOffset = carrousel.offsetTop; // point où il devient sticky
-  const totalScroll = 600; // distance totale pour l'animation
-  const maxTranslateX = window.innerWidth * 0.25; // translation max
+  const totalScroll = 800; // distance totale pour l'animation
+  let maxTranslateX = window.innerWidth * 0.25; // translation max
+
+  // media query JS : on désactive si écran < 480px (exemple)
+  const isSmallScreen = () => window.innerWidth < 1200;
 
   function onScroll() {
-    const scrollY = window.scrollY;
+    if (isSmallScreen()) {
+      carrousel.style.transform = 'none'; // pas d'animation sur petit écran
+      return;
+    }
 
+    const scrollY = window.scrollY;
     if (scrollY >= startOffset) {
       let progress = (scrollY - startOffset) / totalScroll;
-
-      // limite la progression à 1
       progress = Math.min(progress, 1);
-
-      // Phase 1 : translation horizontale
       const translateX = progress * maxTranslateX;
-
-      // Applique la translation
       carrousel.style.transform = `translateX(${translateX}px)`;
     } else {
-      carrousel.style.transform = `translateX(0px)`;
+      carrousel.style.transform = 'translateX(0px)';
     }
   }
 
   window.addEventListener('scroll', onScroll, { passive: true });
   window.addEventListener('resize', () => {
-    // recalcul dynamique si resize
-    maxTranslateX = window.innerWidth * 0.15;
+    maxTranslateX = window.innerWidth * 0.25;
     onScroll();
   });
+
   onScroll();
 });
 
@@ -1015,8 +1423,118 @@ document.addEventListener('DOMContentLoaded', () => {
   courses.forEach(course => course.classList.remove('active'));
   if (courses[0]) courses[0].classList.add('active');
 });
-//disparition du carousel
 
+//swipe mobile pour les courses
+document.addEventListener('DOMContentLoaded', () => {
+  const tabs = document.querySelectorAll('.carrousel ul li');
+  const coursesWrapper = document.querySelector('.courses-wrapper');
+  const courses = document.querySelectorAll('.courses');
+  const selector = document.querySelector('.carrousel .selector');
+
+  let currentIndex = 0;
+
+  function updateActive(index) {
+    // Met à jour le sélecteur
+    if (selector) {
+      const tabWidth = tabs[0].offsetWidth;
+      selector.style.left = `${tabWidth * index}px`;
+    }
+
+    // Met à jour les onglets
+    tabs.forEach((t, i) => t.classList.toggle('active', i === index));
+
+    // Met à jour les cours
+    courses.forEach((c, i) => c.classList.toggle('active', i === index));
+
+    currentIndex = index;
+  }
+
+  // Clic sur onglets
+  tabs.forEach((tab, i) => {
+    tab.addEventListener('click', () => {
+      scrollToCourse(i);
+    });
+  });
+
+  // Fonction pour scroller vers un cours
+  function scrollToCourse(index) {
+    const courseWidth = courses[0].offsetWidth;
+    coursesWrapper.scrollTo({
+      left: courseWidth * index,
+      behavior: 'smooth'
+    });
+    updateActive(index);
+  }
+
+  // Initial
+  scrollToCourse(0);
+
+  // Swipe / scroll horizontal
+  let isTouching = false;
+  let startX = 0;
+
+  coursesWrapper.addEventListener('touchstart', e => {
+    isTouching = true;
+    startX = e.touches[0].clientX;
+  });
+
+  coursesWrapper.addEventListener('touchmove', e => {
+    if (!isTouching) return;
+    const moveX = e.touches[0].clientX;
+    const diff = startX - moveX;
+
+    // On swipe terminé, on change l'index
+    if (Math.abs(diff) > 50) {
+      if (diff > 0 && currentIndex < courses.length - 1) {
+        scrollToCourse(currentIndex + 1);
+      } else if (diff < 0 && currentIndex > 0) {
+        scrollToCourse(currentIndex - 1);
+      }
+      isTouching = false; // reset
+    }
+  });
+
+  coursesWrapper.addEventListener('touchend', () => {
+    isTouching = false;
+  });
+
+  // Sync sur resize
+  window.addEventListener('resize', () => scrollToCourse(currentIndex));
+});
+// selecteur calcul largeur dynamique
+document.addEventListener('DOMContentLoaded', () => {
+  const tabs = document.querySelectorAll('.carrousel ul li');
+  const selector = document.querySelector('.carrousel .selector');
+
+  function moveSelectorTo(index) {
+    const tab = tabs[index];
+    const { offsetLeft, offsetWidth } = tab;
+
+    selector.style.left = `${offsetLeft}px`;
+    selector.style.width = `${offsetWidth}px`;
+  }
+
+  // 👉 Clic sur les onglets
+  tabs.forEach((tab, index) => {
+    tab.addEventListener('click', () => {
+      tabs.forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      moveSelectorTo(index);
+    });
+  });
+
+  // 👉 Initialisation au premier onglet
+  if (tabs[0]) {
+    tabs[0].classList.add('active');
+    moveSelectorTo(0);
+  }
+
+  // 👉 Recalcule si la fenêtre change de taille (important pour responsive)
+  window.addEventListener('resize', () => {
+    const activeIndex = [...tabs].findIndex(t => t.classList.contains('active'));
+    if (activeIndex >= 0) moveSelectorTo(activeIndex);
+  });
+});
 
 
 
