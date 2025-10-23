@@ -130,15 +130,17 @@ h1{
 .container {
     display: flex;
     border-radius: 20px;
+    margin-bottom: 20px;
     max-width: 100%;
     margin-left: 40px;               /* marge à gauche */
             /* arrondis propres */
     box-shadow: 0 4px 10px rgba(0,0,0,0.1); /* petite ombre douce */
 }
 
-.dates, .information {
+ .information {
     padding: 15px 20px;
     border-radius: 20px;
+    font-style: lighter;
 }
 
 .dates {
@@ -149,9 +151,12 @@ h1{
     display: flex;
     flex-direction: column;
     justify-content: center;
+    padding: 15px 20px;
+    border-radius: 20px;
 }
 .lieu{
   color:rgb(231, 188, 69);
+  
 }
 .container:hover{
     box-shadow: 0 8px 20px rgba(0,0,0,0.2); /* ombre plus prononcée au survol */
@@ -717,6 +722,7 @@ footer .top:hover {
     }
    
 .container {
+  position: relative;
     display: flex;
     border-radius: 20px;
     max-width: 100%;
@@ -741,6 +747,7 @@ footer .top:hover {
 }
 .lieu{
   color:rgb(231, 188, 69);
+  
 }
 .container p{
     font-size: 14px;
@@ -898,9 +905,7 @@ position: sticky;
   opacity: 0.8; /* facultatif, pour laisser le texte bien lisible */
    transition: transform 1.2s ease-out, opacity 1s ease-out;
 }
-p.lieu{
-  margin-left:100px;
-}
+
 .anim-img, .anim-top, .anim-left {
   opacity: 0;
   transition: transform 0.4s ease-out, opacity 0.4s ease-out;
@@ -933,45 +938,68 @@ p.lieu{
 </div>
 
 
-<h1>Les prochains cours en studio</h1><br/>
 
-<div class="container">
-    <div class="dates">
-        <h2>06</h2>
-        <p>Juin, 2025</p>
-    </div>
-    <div class="information">
-        <h3>FORUM DES ASSOCIATIONS</h3>
-        <p>10:00 - 17:00</p>
-        <p class="lieu">ESPLANADE DE LA SALLE POLYVALENTE</p>
-    </div>
-</div><br/>
-<div class="container">
-    <div class="dates">
-        <h2>15</h2>
-        <p>Juin, 2025</p>
-    </div>
-    <div class="information">
-        <h3>REPRISE DES COURS MODERN</h3>
-        <p>17:30 - 19:00 : PRE ADOS<br/>
-            19:00 - 20:30 : ADULTE </p>
-        <p class="lieu">SALLE BOULANGER</p><br/>
-    </div>
-</div><br/>
-<div class="container">
-    <div class="dates">
-        <h2>17</h2>
-        <p>Juin, 2025</p>
-    </div>
-    <div class="information">
-        <h3>REPRISE DES COURS CLASSIQUE</h3><br/>
-        <p>17:30 - 18:15 : PRE EVEIL<br/>
-18H15-19H15 : CLASSIQUE 1<br/>
-19H15-20H15 : CLASSIQUE2 </p>
-        <p class="lieu">
-        SALLE BOULANGER</p><br/>
-    </div>
-</div>
+
+
+<h1>Les prochains cours en studio</h1><br/>
+  {% if upcoming_events is not empty %}
+        
+            {# Boucle sur les événements récupérés par l'API #}
+            {% for event in upcoming_events %}
+                {# Tente d'utiliser 'dateTime' (événement précis) ou 'date' (journée entière) #}
+                {% set start_date = event.start.dateTime|default(event.start.date) %}
+                
+                <article class="p-4 bg-white rounded-lg shadow-md hover:shadow-lg transition duration-300 border-l-4 border-indigo-500">
+                <div class="container">
+                   
+                    
+                    <div class="dates">
+                        {# Affichage de la date #}
+                        <span style="font-size:38px; font-weight:bold; color:black;">
+                            
+                            {{ start_date|date('d') }}</span><br/>
+                            <span>
+
+                            {{ start_date|date('F Y') }}
+                        </span>
+                        </div>
+                        <div class="information">
+                         <h3 class="text-xl font-semibold text-gray-800">{{ event.summary }}</h3><br/>
+                        {# Affichage de l'heure si disponible (non-événement d'une journée) #}
+                        {% if event.start.dateTime is not null %}
+                            <span>
+                                <i class="fas fa-clock w-4 h-4 text-indigo-500 mr-1"></i> 
+                                {{ start_date|date('H:i') }}
+                            </span><br/>
+                        {% endif %}
+                        
+                        {# Affichage du lieu #}
+                        {% if event.location %}
+                            <span class="lieu">
+                                <i class="fas fa-map-marker-alt w-4 h-4 text-indigo-500 mr-1"></i> 
+                                {{ event.location }}
+                            </span>
+                             </div>
+                        {% endif %}
+                    </div>
+                    
+                    {# Description #}
+                    {% if event.description %}
+                        <p class="text-gray-700 mt-3 text-sm">
+                            {{ event.description|nl2br|length > 150 ? event.description|slice(0, 150) ~ '...' : event.description|nl2br }}
+                        </p>
+                    {% endif %}
+                </article>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="text-center p-6 bg-yellow-100 border border-yellow-300 rounded-lg">
+            <p class="text-yellow-800 font-medium">🎉 Aucune activité n'est actuellement programmée sur le calendrier.</p>
+        </div>
+    {% endif %}
+</section>
+
+
 
 <h1>VOTRE PREMIER COUR D’ESSAI OFFERT</h1>
 <div class="geometry">

@@ -12,6 +12,7 @@ class BackOfficeController extends AbstractController
     #[Route('/admin', name: 'back_office')]
     public function index(Request $request): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
         return $this->render('back_office/index.html.twig', [
             'controller_name' => 'BackOfficeController',
         ]);

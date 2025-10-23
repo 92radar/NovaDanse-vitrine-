@@ -11,3 +11,7 @@ home:
 backoffice:
     path: /admin
     controller: App\Controller\BackofficeController::index
+
+debug:
+    path: /debug
+    controller: App\Controller\DebugController::index
