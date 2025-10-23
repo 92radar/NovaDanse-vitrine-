@@ -1,20 +1,60 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello BackOfficeController!{% endblock %}
+{% block title %} NØVA DANSE Back Office{% endblock %}
 
 {% block body %}
 <style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+
+h1 {
+    text-align: center;
+    margin-top: 50px;
+    font-family: 'Arial', sans-serif;
+    color: #333;
+}
+p {
+    text-align: center;
+    font-size: 18px;
+    color: #666;
+}
+form {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+form input{
+    width: 90%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+form button {
+    width: 100%;
+    padding: 10px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
 </style>
+<h1>Bienvenue dans le Back Office de NØVA DANSE</h1>
+<p>veuillez vous identifier pour acceder aux differentes fonctionnalites</p>
+<form method="post" action="">
+    <div class="form-group">
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+        <input type="text" id="username" name="_username" placeholder="Identifiant" class="form-control" required autofocus>
+    </div>
+    <div class="form-group">
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code>/Users/macosdev/Documents/GitHub/NovaDanse-vitrine-/NovaDanseSymfony/src/Controller/BackOfficeController.php</code></li>
-        <li>Your template at <code>/Users/macosdev/Documents/GitHub/NovaDanse-vitrine-/NovaDanseSymfony/templates/back_office/index.html.twig</code></li>
-    </ul>
-</div>
+        <input type="password" id="password" name="_password" placeholder="Mots de passe" class="form-control" required>
+    </div>
+    <button type="submit" class="btn btn-primary">Se connecter</button>
+
+
+
 {% endblock %}

@@ -543,12 +543,28 @@ h1{
     color: white;
     padding: 15px 30px;
     border: none;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    box-shadow: 0 14px 30px rgba(0,0,0,0.2);
     border-radius: 10px;
     cursor: pointer;
     font-size: 20px;
     font-weight: bold;
     transition: background-color 0.3s;
+}
+.CTA-button:hover{
+    transform: translateX(10px); /* léger déplacement vers le haut */
+    transition: transform 0.3s, box-shadow 0.3s; 
+}
+
+.design{
+  font-size: 24px;
+  font-weight: lighter;
+  font-family: "times new roman", serif;
+  font-style: italic;
+}
+.designBalance{
+  font-size: 24px;
+  font-weight: Bold;
+
 }
 
 form{
@@ -889,6 +905,8 @@ p.lieu{
   opacity: 0;
   transition: transform 0.4s ease-out, opacity 0.4s ease-out;
 }
+.carrousel ul li { display: inline-block; flex:1; text-align:center; padding: 20px; font-size: 10px; /* Taille de police plus petite pour les autres éléments */ font-weight: lighter; z-index: 1; }
+
 }
 </style>
 
@@ -1071,7 +1089,7 @@ Samedi<br/></p>
 <div class="carrousel sticky">
 <h1>COURS</h1>
 <ul>
-  <li class="active" data-tab="eveil">Èveil</li>
+  <li class="active" data-tab="eveil">Éveil</li>
   <li data-tab="classique">Classique</li>
   <li data-tab="preado">Pré-ado</li>
   <li data-tab="adultes">Adultes</li>
@@ -1187,7 +1205,8 @@ Samedi<br/></p>
     </div>
 </div>
     <div class="CTA-button" >
-    <p style="text-align:center; margin:40px;">Rendez vous sur Hello Asso</p>
+    
+    <p class="designBalance" style="text-align:center; margin:40px; ">Finaliser votre inscription sur <span class="design" >Hello Asso</span></p>
     </div>
 
     <div class="contact-form">

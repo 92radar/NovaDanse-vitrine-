@@ -7,13 +7,13 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\HttpFoundation\Request;
 
-class BackOfficeController
+class BackOfficeController extends AbstractController
 {
-    #[Route('/admin', name: 'backoffice')]
+    #[Route('/admin', name: 'back_office')]
     public function index(Request $request): Response
     {
-        return new Response(
-            '<html><body><h1>Welcome to the Back Office Nova Danse Symfony!</h1></body></html>'
-        );
+        return $this->render('back_office/index.html.twig', [
+            'controller_name' => 'BackOfficeController',
+        ]);
     }
 }
