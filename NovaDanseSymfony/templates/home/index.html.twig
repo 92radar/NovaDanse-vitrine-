@@ -16,7 +16,8 @@
 }
 
 body {
-    background: linear-gradient(90deg, #0088FF, #CE61C2); /* Dégradé linéaire horizontal */
+    background: linear-gradient(90deg, #0088FF,rgb(234, 117, 220));
+background: radial-gradient(circle at center, #0088FF 0%,rgb(4, 19, 117)  30%,#E1BAD9 90%); /* Dégradé linéaire horizontal */
     height: 100vh; /* Assure que le dégradé couvre toute la hauteur de la fenêtre */
     margin: 0;
     color: white;
@@ -79,11 +80,14 @@ img{
 
 }
 .header{
+
     text-align: center;
     margin-top: 20px;
     margin: 20px 20px;
     animation: dissolveIn 2s ease-in-out;
 }
+
+
 @keyframes dissolveIn {
     from {
         opacity: 0;
@@ -108,15 +112,7 @@ img{
   width: 20px; /* plus court que les autres */
    /* ou à gauche/droite selon le style désiré */
 }
-.menu-icon{
-    border:1px solid transparent;
-    background-color:rgb(85, 158, 231);
-    border-radius: 50%;
-    padding:25px;
 
-
-
-}
 
 h1{
    font-family: "Lilita One", sans-serif;
@@ -145,7 +141,7 @@ h1{
 
 .dates {
     text-align: center;
-    background: linear-gradient(90deg, rgb(231, 188, 69), #CE61C2);
+    background: linear-gradient(90deg, rgb(228, 196, 109),rgb(202, 120, 192));
     min-width: 120px;
     color: black;
     display: flex;
@@ -188,7 +184,9 @@ h1{
 .shape{
   position: absolute;
   background-color: #E1BAD9;
-  border: 1px solid transparent;
+
+  
+  
   box-sizing: border-box;
   transition: transform 0.2s ease, opacity 0.2s ease;
  
@@ -201,6 +199,7 @@ h1{
   height: 90%;
   background-color: #483097;
   border-radius: 194px 194px 0 194px;
+  box-shadow: 0 16px 28px rgba(0,0,0,0.1);
 
   bottom: 0;
   right: 0;
@@ -213,6 +212,7 @@ h1{
   height: 150%;
   border-radius: 372px 372px 372px 0;
   background-color: #312493;
+  box-shadow: 0 16px 28px rgba(0,0,0,0.1);
 
   bottom: 0;
   left: 0;
@@ -224,6 +224,7 @@ h1{
   width: 130%;
   height: 130%;
   border-radius: 372px 0 372px 372px;
+  box-shadow: 0 16px 28px rgba(0,0,0,0.1);
 
   background-color: #312493;
   top: 0;
@@ -237,6 +238,7 @@ h1{
   height: 100%;
   background-color: #483097;
   border-radius: 0 194px 194px 194px;
+  box-shadow: 0 16px 28px rgba(0,0,0,0.1);
 
   top: 0;
   left: 0;
@@ -327,7 +329,7 @@ h1{
     font-weight: bold;
     padding:0px;
     padding-top:0px;
-    color: blue;
+    color:rgb(1, 5, 119);
 
 }
 .flyer {
@@ -361,7 +363,7 @@ h1{
      float: left;
 }
 .FAQ{
-    margin: 20px;
+    margin: 10px;
     padding: 20px;
     max-width: 100%;
 }
@@ -414,7 +416,8 @@ h1{
     left: 10px;      /* décalage horizontal du calque */
     width: 100%;
     height: 100%;
-    background: linear-gradient(90deg, #CE61C2, #0088FF);
+        background: linear-gradient(90deg, #0088FF,rgb(234, 117, 220));
+background: radial-gradient(circle at center, #0088FF 0%,rgb(4, 19, 117)  30%,#E1BAD9 90%);
  /* doit correspondre au bouton */
     z-index: -1;         /* derrière le bouton */
     pointer-events: none; /* ne bloque pas le clic */
@@ -774,6 +777,7 @@ h1{
     font-weight: normal;
     padding:30px;
 }
+
 .carrousel h1{
     display:none;
 }
@@ -848,6 +852,7 @@ position: sticky;
   max-width: 100%;
   
 }
+
 .geometry p{
     position: absolute;
     color: white;
@@ -861,9 +866,9 @@ position: sticky;
 }
   .card-image {
   position: relative;
-  width: 50%;
-  height: 50%;
-  margin: 20px 20px;
+  width: 90%;
+  height: 90%;
+  margin: 10px 10px;
   
  /* évite que le ::after dépasse */
 }
@@ -911,8 +916,164 @@ position: sticky;
   transition: transform 0.4s ease-out, opacity 0.4s ease-out;
 }
 .carrousel ul li { display: inline-block; flex:1; text-align:center; padding: 20px; font-size: 10px; /* Taille de police plus petite pour les autres éléments */ font-weight: lighter; z-index: 1; }
+.header{
 
+    text-align: center;
+    margin-top: 20px;
+    margin: 20px 20px;
+    animation: dissolveIn 2s ease-in-out;
+    max-width: 100%;
 }
+}
+
+.parent {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+    gap: 8px;
+}
+    
+.div1 {
+    grid-column: span 2 / span 2;
+    grid-row: span 2 / span 2;
+    background-image: url('Pictures/pexels-anastasia-shuraeva-8935597.jpg');
+    background-size: cover;
+    min-height: 200px;
+}
+
+.div3 {
+    grid-row: span 3 / span 3;
+    grid-column-start: 3;
+     background-image: url('Pictures/pexels-pixabay-39572.jpg');
+     background-size: cover;
+     min-height: 300px;
+}
+
+.div5 {
+    grid-column: span 2 / span 2;
+    grid-row: span 3 / span 3;
+    grid-column-start: 4;
+     background-image: url('Pictures/pexels-krivitskiy-1231258.jpg');
+      background-size: cover;
+}
+
+.div6 {
+    grid-column: span 2 / span 2;
+    grid-row: span 3 / span 3;
+    grid-row-start: 3;
+     background-image: url('Pictures/pexels-lucaspezeta-2010951.jpg');
+      background-size: cover;
+}
+
+.div7 {
+    grid-column: span 3 / span 3;
+    grid-row: span 2 / span 2;
+    grid-column-start: 3;
+    grid-row-start: 4;
+     background-image: url('Pictures/pexels-pixabay-39572.jpg');
+    background-size: cover;
+    background-position: center;
+}
+
+.parent__2 {
+  margin-top: 10px;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+    gap: 8px;
+}
+    
+.div2 {
+    grid-column: span 2 / span 2;
+    grid-row: span 2 / span 2;
+    background-image: url('Pictures/pexels-pixabay-209948.jpg');
+    background-size: cover;
+    background-position: center;
+     min-height: 300px;
+}
+
+.div8 {
+    grid-column: span 2 / span 2;
+    grid-row: span 3 / span 3;
+    grid-column-start: 3;
+    background-image: url('Pictures/pexels-ricardomoura-2285932.jpg');
+    background-size: cover;
+    background-position: center;
+}
+   
+
+
+.div9 {
+    grid-row: span 5 / span 5;
+    grid-column-start: 5;
+    background-image: url('Pictures/pexels-cottonbro-10640395.jpg');
+    background-size: cover;
+    background-position: center;
+}
+
+.div10 {
+    grid-column: span 2 / span 2;
+    grid-row: span 3 / span 3;
+    grid-row-start: 3;
+     background-image: url('Pictures/pexels-mlourph-34389515.jpg');
+    background-size: cover;
+    background-position: center;
+}
+
+.div11 {
+    grid-column: span 2 / span 2;
+    grid-row: span 2 / span 2;
+    grid-column-start: 3;
+    grid-row-start: 4;
+    background-image: url('Pictures/pexels-khoa-vo-2347168-6533948.jpg');
+    background-size: cover;
+    background-position: center;
+}
+
+.div1:hover{
+    transform: scale(1.01);
+    transition: transform 0.3s;
+}
+.div3:hover{
+    transform: scale(1.01);
+    transition: transform 0.3s;
+}
+.div5:hover{
+    transform: scale(1.01);
+    transition: transform 0.3s;
+}
+.div6:hover{
+    transform: scale(1.01);
+    transition: transform 0.3s;
+}
+.div7:hover{
+    transform: scale(1.01);
+    transition: transform 0.3s;
+}
+.div8:hover{
+    transform: scale(1.01);
+    transition: transform 0.3s;
+}
+.div2:hover{
+    transform: scale(1.01);
+    transition: transform 0.3s;
+}
+.div9:hover{
+    transform: scale(1.01);
+    transition: transform 0.3s;
+}
+.div10:hover{
+    transform: scale(1.01);
+    transition: transform 0.3s;
+}
+.div11:hover{
+    transform: scale(1.01);
+    transition: transform 0.3s;
+}
+
+
+        
+        
 </style>
 
 <nav class="NavBar">
@@ -934,8 +1095,30 @@ position: sticky;
 
 </nav> 
 <div class="header" >
-    <img src="{{ asset('Pictures/pexels-george-desipris-1110704.jpg') }}" alt="Image de danse"> 
+<video autoplay loop muted playsinline width="90%" height="70%">
+  <source src="{{ asset('video/2795748-uhd_3840_2160_25fps (1).mp4') }}" type="video/mp4">
+  Your browser does not support the video tag.
+</div><br/>
+
+<h1>Association de danse</h1> 
+
+<div class="parent">
+    <div class="div1"></div>
+    <div class="div3"></div>
+    <div class="div5"></div>
+    <div class="div6"></div>
+    <div class="div7"></div>
 </div>
+
+<div class="parent__2">
+    <div class="div2"></div>
+    <div class="div8"></div>
+    <div class="div9"></div>
+    <div class="div10"></div>
+    <div class="div11"></div>
+</div>
+    
+    
 
 
 
@@ -1065,7 +1248,7 @@ Samedi<br/></p>
 </div>
 
 <div class="FAQ">
-<h1>Foire aux questions</h1><br/>
+<h1 style="color:rgb(1, 5, 119);";>Foire aux questions</h1><br/>
 <p>Quels sont les âges recommandés pour commencer la danse classique et moderne ?<i class="fa-solid fa-chevron-down"></i></p><br/>
 <div class="separator" ></div>
 <p>Où sont situés les studios ?<i class="fa-solid fa-chevron-down"></i></p><br/>
@@ -1076,7 +1259,7 @@ Samedi<br/></p>
 
 </div>
 <div class="localisation">
-<h1>Où nous trouver ?</h1>
+<h1 style="color:rgb(1, 5, 119);">Où nous trouver ?</h1>
 <div class="card-container">
 <div class="card">
 <div class="card-image">
