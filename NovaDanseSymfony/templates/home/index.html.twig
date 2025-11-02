@@ -1429,18 +1429,16 @@ Samedi<br/></p>
 
     <div class="contact-form">
     <h1>Contactez-nous</h1>
-    <form action="#" method="post">
+     {% for message in app.flashes('success') %}
+        <div class="alert alert-success">{{ message }}</div>
+    {% endfor %}
 
-        <input type="text" id="name" name="name" placeholder="Votre nom" required>
-
-
-        <input type="email" id="email" name="email"placeholder="Votre email"  required>
-
-
-        <textarea id="message" name="message" placeholder="Demandez nous ce que vous voulez.." required></textarea>
-
-        <button type="submit">Envoyer</button>
-    </form>
+    {{ form_start(form) }}
+        {{ form_row(form.name) }}
+        {{ form_row(form.email) }}
+        {{ form_row(form.message) }}
+        {{ form_row(form.submit) }}
+    {{ form_end(form) }}
     </div>
  <!-- Espace de fin de page -->
   <footer>
