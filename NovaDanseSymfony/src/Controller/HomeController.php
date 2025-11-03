@@ -40,6 +40,7 @@ class HomeController extends AbstractController
                 );
 
             try {
+                
                 $mailer->send($email);
                 $this->addFlash('success', 'Merci, votre message a bien été envoyé !');
             } catch (\Exception $e) {

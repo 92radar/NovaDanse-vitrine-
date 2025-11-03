@@ -20,3 +20,6 @@
 /public/assets/
 /assets/vendor/
 ###< symfony/asset-mapper ###
+
+###> secrets ###
+nova-danse-calendar-api-622382305390.json

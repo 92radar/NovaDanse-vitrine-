@@ -1079,6 +1079,54 @@ position: sticky;
 }
 
 
+/* Menu plein écran (caché par défaut) */
+.fullscreen-menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #E1BAD9;
+  color: black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+  z-index: 1000;
+}
+
+/* Quand le menu est actif */
+.fullscreen-menu.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Style du contenu du menu */
+.fullscreen-menu ul {
+  list-style: none;
+  text-align: center;
+  padding: 0;
+}
+
+.fullscreen-menu li {
+  margin: 20px 0;
+}
+
+.fullscreen-menu a {
+  text-decoration: none;
+  color: black;
+  font-size: 1.5rem;
+  font-weight: lighter;
+  transition: color 0.3s;
+}
+
+.fullscreen-menu a:hover {
+  color:rgb(245, 245, 245);
+}
+
+
         
         
 </style>
@@ -1093,14 +1141,31 @@ position: sticky;
         <li><a href="">Accueil</a></li>
         
     </ul>
-    <div class="menu-icon" onclick="toggleMenu()">
+    <div class="menu-icon" id="menu-icon">
         <div class="bar"></div>
         <div class="bar"></div>
         <div class="bar"></div>
+       
+        
     </div>
+    </nav> 
+
+<!-- Menu plein écran -->
+<div class="fullscreen-menu" id="fullscreen-menu">
+  <nav>
+    <ul>
+      <li><a href="#">Accueil</a></li>
+      <li><a href="#">Profil</a></li>
+      <li><a href="#">Abonnements</a></li>
+      <li><a href="#">Contact</a></li>
+    </ul>
+  </nav>
+</div>
 
 
-</nav> 
+
+
+
 <div class="header" >
 <video autoplay loop muted playsinline width="90%" height="70%">
   <source src="{{ asset('video/2795748-uhd_3840_2160_25fps (1).mp4') }}" type="video/mp4">
@@ -1483,6 +1548,29 @@ Samedi<br/></p>
 
 
 <script>
+//burger menu open
+const menuIcon = document.getElementById('menu-icon');
+const fullscreenMenu = document.getElementById('fullscreen-menu');
+
+// Fonction pour ouvrir/fermer le menu
+function toggleMenu() {
+  const isActive = fullscreenMenu.classList.toggle('active');
+  menuIcon.classList.toggle('active', isActive);
+  document.body.style.overflow = isActive ? 'hidden' : ''; // bloque/débloque le scroll
+}
+
+// Clique sur l’icône → ouvre/ferme
+menuIcon.addEventListener('click', toggleMenu);
+
+// Clique sur le menu → ferme
+fullscreenMenu.addEventListener('click', (e) => {
+  if (e.target.tagName === 'A' || e.target === fullscreenMenu) {
+    toggleMenu();
+  }
+});
+
+// animation des shapes
+
  document.addEventListener('DOMContentLoaded', () => {
   const shapes = document.querySelectorAll('.shape');
   const geometry = document.querySelector('.geometry');
