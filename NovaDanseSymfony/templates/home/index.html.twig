@@ -1125,7 +1125,27 @@ position: sticky;
 .fullscreen-menu a:hover {
   color:rgb(245, 245, 245);
 }
+.title span::after{
+    content:'pour tout le monde';
+    animation: words 14s infinite;
 
+}
+@keyframes words{
+    0%{content:'pour tout le monde';
+    color: #15BCE6;
+    }
+    25%{content:'pour tout les âges';
+    color:rgb(125, 215, 80);
+    }
+    50%{content:'pour tous niveaux';
+    color: #E26F04;
+    }
+    75%{content:'dans la bonne humeur';
+    color: rgb(231, 188, 69);
+    }
+    100%{content:'pour tout le monde';
+    color: #15BCE6;}
+}
 
         
         
@@ -1263,8 +1283,8 @@ position: sticky;
   <div class="cell cell-bl"><div class="shape shape3"><p><span style="color:#E26F04;">DANSE</span><br/>CLASSIQUE<Br/><span style="color:#15BCE6;">DÉS 6 ANS</span></p></div></div>
   <div class="cell cell-br"><div class="shape shape4"><p><span style="color:#15BCE6;">DANSE</span><br/><span style="color:#E26F04;">MODERNE</span><Br/>DÉS 11 ANS</p></div></div>
 </div><br/><br/>
-<h1>Des studios de danse,<br/>
-pour tout le monde</h1>
+<h1 class="title">Des studios de danse,<br/>
+<span></span></h1>
 <div class="SectionsContainer">
 
   <div class="Section">
