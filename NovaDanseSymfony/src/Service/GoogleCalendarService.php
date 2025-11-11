@@ -24,7 +24,7 @@ class GoogleCalendarService
             $client = new Client();
             
             // 2. Définir le chemin vers le fichier de clé de service
-            $keyFilePath = $params->get('kernel.project_dir') . '/config/secrets/nova-danse-calendar-api-622382305390.json';
+            $keyFilePath = $params->get('kernel.project_dir') . '/config/secrets/nova-danse-calendar-api-9f9d2fb93822.json';
             
             if (!file_exists($keyFilePath)) {
                  throw new \Exception("Le fichier de clé de service Google est introuvable à l'emplacement: " . $keyFilePath);
