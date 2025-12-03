@@ -235,9 +235,8 @@ Samedi<br/></p>
 
 
 
-<div class="sticky-wrapper">
-<div class="carrousel sticky">
-<h1>COURS</h1>
+<div class="sticky-wrapper ">
+<div class="carrousel sticky desktop">
 <ul>
   <li class="active" data-tab="eveil">Éveil</li>
   <li data-tab="classique">Classique</li>
@@ -567,43 +566,6 @@ document.addEventListener('DOMContentLoaded', () => {
       selector.style.left = `${i * 25}%`;
     });
   });
-  // translation du carrousel
-  document.addEventListener('DOMContentLoaded', () => {
-  const carrousel = document.querySelector('.carrousel');
-  if (!carrousel) return;
-
-  const startOffset = carrousel.offsetTop; // point où il devient sticky
-  const totalScroll = 800; // distance totale pour l'animation
-  let maxTranslateX = window.innerWidth * 0.25; // translation max
-
-  // media query JS : on désactive si écran < 480px (exemple)
-  const isSmallScreen = () => window.innerWidth < 1200;
-
-  function onScroll() {
-    if (isSmallScreen()) {
-      carrousel.style.transform = 'none'; // pas d'animation sur petit écran
-      return;
-    }
-
-    const scrollY = window.scrollY;
-    if (scrollY >= startOffset) {
-      let progress = (scrollY - startOffset) / totalScroll;
-      progress = Math.min(progress, 1);
-      const translateX = progress * maxTranslateX;
-      carrousel.style.transform = `translateX(${translateX}px)`;
-    } else {
-      carrousel.style.transform = 'translateX(0px)';
-    }
-  }
-
-  window.addEventListener('scroll', onScroll, { passive: true });
-  window.addEventListener('resize', () => {
-    maxTranslateX = window.innerWidth * 0.25;
-    onScroll();
-  });
-
-  onScroll();
-});
 
 //activation des onglets 
 document.addEventListener('DOMContentLoaded', () => {

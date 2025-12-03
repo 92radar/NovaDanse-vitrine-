@@ -489,6 +489,8 @@ h1{
   pointer-events: none;
 }
 
+
+
 .courses {
     display: flex;
     align-items: center;
@@ -523,8 +525,7 @@ h1{
 .sticky-wrapper {
   height: 350px;
   width: 80%;
-  margin-left: 500px;
-
+  justify-content: space-between;
 /* le sticky s’arrête avant la fin */
 }
 
@@ -723,6 +724,11 @@ footer .top:hover {
     .NavBar ul li:not(:first-child) {
         display:none;
     }
+    .Navbar{
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+    }
    .menu-icon {
         display: flex; /* Affiche le menu burger */
     }
@@ -784,7 +790,7 @@ h1{
 .carrousel h1{
     display:none;
 }
-.carrousel{ position : relative;  padding:20px;min-height:30px; max-width: 100%; border: 1px solid white; border-radius: 70px; display: flex; align-items: center; justify-content: flex-start; padding: 0 20px;backdrop-filter: blur(10px); background: rgba(255, 255, 255, 0.1); box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);} 
+.carrousel{ position : relative;   padding:20px;min-height:30px; max-width: 100%; border: 1px solid white; border-radius: 70px; display: flex; align-items: center; justify-content: flex-start; padding: 0 20px;backdrop-filter: blur(10px); background: rgba(255, 255, 255, 0.1); box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);} 
 .carrousel ul {
   display: flex;
 
@@ -815,16 +821,16 @@ h1{
 .sticky-wrapper {
   height: 200px;
   max-width: 100%;
+  
 
 
 }
 .sticky {
 display:block;
 position: sticky;
-    
-    z-index:1;
-    display: flex; 
-    padding: 0 20px;
+z-index:1;
+display: flex; 
+padding: 0 20px;
 }
 .courses {
   display: none;
