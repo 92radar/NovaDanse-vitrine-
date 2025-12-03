@@ -10,24 +10,23 @@ use Psr\Log\LoggerInterface;
 
 class GoogleCalendarService
 {
-    private Calendar $calendarService;
-    // Votre ID de calendrier
+    private ?Calendar $calendarService = null;
     private string $calendarId = 'df4b9c58ae85fd82aa315b119bfd24023c06e67322c5ce0ad8f40731594fe98d@group.calendar.google.com';
     private LoggerInterface $logger;
 
     public function __construct(ParameterBagInterface $params, LoggerInterface $logger)
     {
         $this->logger = $logger;
-        
+
         try {
             // 1. Initialiser le client Google
             $client = new Client();
-            
+
             // 2. Définir le chemin vers le fichier de clé de service
             $keyFilePath = $params->get('kernel.project_dir') . '/config/secrets/nova-danse-calendar-api-9f9d2fb93822.json';
-            
+
             if (!file_exists($keyFilePath)) {
-                 throw new \Exception("Le fichier de clé de service Google est introuvable à l'emplacement: " . $keyFilePath);
+                throw new \Exception("Le fichier de clé de service Google est introuvable à l'emplacement: " . $keyFilePath);
             }
 
             $client->setAuthConfig($keyFilePath);
@@ -39,18 +38,26 @@ class GoogleCalendarService
 
         } catch (\Exception $e) {
             $this->logger->error('Erreur lors de l\'initialisation du service Google Calendar: ' . $e->getMessage());
+            // $calendarService reste null, on gère cela plus tard
         }
     }
 
     /**
      * Récupère les N prochains événements, à partir de maintenant.
+     *
      * @param int $maxResults Le nombre maximum d'événements à retourner.
-     * @return array La liste des événements (objets Google_Service_Calendar_Event) ou un tableau vide en cas d'erreur.
+     * @return array La liste des événements ou tableau vide en cas d'erreur.
      */
     public function getUpcomingEvents(int $maxResults = 3): array
     {
+        // Vérifie que le service a bien été initialisé
+        if ($this->calendarService === null) {
+            $this->logger->error('Google Calendar Service non initialisé. Impossible de récupérer les événements.');
+            return [];
+        }
+
         $now = new \DateTime('now', new \DateTimeZone('Europe/Paris'));
-        
+
         $options = [
             'maxResults' => $maxResults,
             'orderBy' => 'startTime',
@@ -62,7 +69,6 @@ class GoogleCalendarService
         try {
             $events = $this->calendarService->events->listEvents($this->calendarId, $options);
             return $events->getItems();
-            
         } catch (\Exception $e) {
             $this->logger->error('Erreur lors de la récupération des événements du calendrier: ' . $e->getMessage());
             return [];
