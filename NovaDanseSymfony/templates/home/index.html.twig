@@ -52,20 +52,30 @@
 <h1>Association de danse</h1> 
 
 <div class="parent">
-    <div class="div1"></div>
-    <div class="div3"></div>
-    <div class="div5"></div>
-    <div class="div6"></div>
-    <div class="div7"></div>
+    <div class="div1 lazy-bg" data-bg="/Pictures/pexels-anastasia-shuraeva-8935597.jpg"></div>
+
+    <div class="div3 lazy-bg" data-bg="/Pictures/pexels-pixabay-39572.jpg"></div>
+
+    <div class="div5 lazy-bg" data-bg="/Pictures/pexels-krivitskiy-1231258.jpg"></div>
+
+    <div class="div6 lazy-bg" data-bg="/Pictures/pexels-lucaspezeta-2010951.jpg"></div>
+
+    <div class="div7 lazy-bg" data-bg="/Pictures/pexels-pixabay-39572.jpg"></div>
 </div>
 
+
 <div class="parent__2">
-    <div class="div2"></div>
-    <div class="div8"></div>
-    <div class="div9"></div>
-    <div class="div10"></div>
-    <div class="div11"></div>
+    <div class="div2 lazy-bg" data-bg="/Pictures/pexels-pixabay-209948.jpg"></div>
+
+    <div class="div8 lazy-bg" data-bg="/Pictures/pexels-ricardomoura-2285932.jpg"></div>
+
+    <div class="div9 lazy-bg" data-bg="/Pictures/pexels-cottonbro-10640395.jpg"></div>
+
+    <div class="div10 lazy-bg" data-bg="/Pictures/pexels-mlourph-34389515.jpg"></div>
+
+    <div class="div11 lazy-bg" data-bg="/Pictures/pexels-khoa-vo-2347168-6533948.jpg"></div>
 </div>
+
     
     
 
@@ -705,6 +715,33 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 });
+
+//lazy loading background images
+document.addEventListener('DOMContentLoaded', () => {
+    const lazyDivs = document.querySelectorAll('.lazy-bg');
+
+    const observer = new IntersectionObserver((entries, obs) => {
+        entries.forEach(entry => {
+            if (!entry.isIntersecting) return;
+
+            const div = entry.target;
+            const bg = div.getAttribute('data-bg');
+
+            const img = new Image();
+            img.src = bg;
+
+            img.onload = () => {
+                div.style.backgroundImage = `url(${bg})`;
+                div.classList.add('loaded');
+            };
+
+            obs.unobserve(div);
+        });
+    });
+
+    lazyDivs.forEach(div => observer.observe(div));
+});
+
 
 
 
