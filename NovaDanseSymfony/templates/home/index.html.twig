@@ -606,17 +606,14 @@ document.addEventListener('DOMContentLoaded', () => {
   let currentIndex = 0;
 
   function updateActive(index) {
-    // Met à jour le sélecteur
-    if (selector) {
-      const tabWidth = tabs[0].offsetWidth;
-      selector.style.left = `${tabWidth * index}px`;
-    }
-
     // Met à jour les onglets
     tabs.forEach((t, i) => t.classList.toggle('active', i === index));
 
     // Met à jour les cours
     courses.forEach((c, i) => c.classList.toggle('active', i === index));
+
+    // Déplace ET redimensionne le selector
+    moveSelectorTo(index);
 
     currentIndex = index;
   }
