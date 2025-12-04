@@ -668,11 +668,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // ---- snap helper: compute nearest index from scrollLeft and snap
   function snapToNearestCourse() {
-    const courseWidth = courses[0].offsetWidth || coursesWrapper.clientWidth;
-    const left = coursesWrapper.scrollLeft;
-    const index = Math.round(left / courseWidth);
-    scrollToCourse(index);
+  const courseWidth = courses[0].offsetWidth || coursesWrapper.clientWidth;
+
+  if (courseWidth <= 0) return; // sécurité
+
+  const left = coursesWrapper.scrollLeft;
+  let index = Math.round(left / courseWidth);
+
+  // sécurités anti-retour à 0
+  index = Math.max(0, Math.min(index, courses.length - 1));
+
+  // si index est différent de currentIndex → MAJ correcte
+  if (index !== currentIndex) {
+    updateActive(index);
+  } else {
+    // même index mais selector pas à jour → MAJ forcée
+    moveSelectorTo(index);
   }
+}
 
   // ---- ensure selector updates on manual scroll end as well
   coursesWrapper.addEventListener('scroll', () => {
