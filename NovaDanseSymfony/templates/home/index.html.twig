@@ -558,150 +558,139 @@ document.addEventListener('DOMContentLoaded', () => {
 
   observer.observe(flyerGeometry);
 });
-// animation des onglet du carrousel
- const tabs = document.querySelectorAll(".carrousel li");
-  const selector = document.createElement("div");
-  selector.classList.add("selector");
-  document.querySelector(".carrousel ul").appendChild(selector);
-
-  tabs.forEach((tab, i) => {
-    tab.addEventListener("click", () => {
-      document.querySelector(".carrousel li.active")?.classList.remove("active");
-      tab.classList.add("active");
-      selector.style.left = `${i * 25}%`;
-    });
-  });
-
-//activation des onglets 
+// Consolidated Carrousel + Selector + Swipe script
 document.addEventListener('DOMContentLoaded', () => {
-  const tabs = document.querySelectorAll('.carrousel ul li');
-  const courses = document.querySelectorAll('.courses');
+  const tabs = Array.from(document.querySelectorAll('.carrousel ul li'));
+  const ul = document.querySelector('.carrousel ul');
+  let selector = document.querySelector('.carrousel .selector');
 
-  tabs.forEach(tab => {
-    tab.addEventListener('click', () => {
-      // --- Met à jour l'état actif du carrousel
-      tabs.forEach(t => t.classList.remove('active'));
-      tab.classList.add('active');
+  // create selector if missing
+  if (!selector) {
+    selector = document.createElement('div');
+    selector.classList.add('selector');
+    if (ul) ul.appendChild(selector);
+  }
 
-      // --- Affiche le cours correspondant
-      courses.forEach(course => course.classList.remove('active'));
-      const targetClass = tab.dataset.tab;
-      const targetCourse = document.querySelector(`.courses.${targetClass}`);
-      if (targetCourse) targetCourse.classList.add('active');
-    });
-  });
-
-  // --- Initial : afficher le premier cours
-  courses.forEach(course => course.classList.remove('active'));
-  if (courses[0]) courses[0].classList.add('active');
-});
-
-//swipe mobile pour les courses
-document.addEventListener('DOMContentLoaded', () => {
-  const tabs = document.querySelectorAll('.carrousel ul li');
   const coursesWrapper = document.querySelector('.courses-wrapper');
-  const courses = document.querySelectorAll('.courses');
-  const selector = document.querySelector('.carrousel .selector');
+  const courses = Array.from(document.querySelectorAll('.courses'));
+  if (!tabs.length || !coursesWrapper || !courses.length) return;
 
   let currentIndex = 0;
+  let isTouching = false;
+  let startX = 0;
+  let scrollDebounceTimer = null;
 
+  // ---- helper: move + resize selector to target tab index
+  function moveSelectorTo(index) {
+    const tab = tabs[index];
+    if (!tab || !selector) return;
+    const { offsetLeft, offsetWidth } = tab;
+    selector.style.left = `${offsetLeft}px`;
+    selector.style.width = `${offsetWidth}px`;
+  }
+
+  // ---- helper: update active states, selector and index (no scrolling)
   function updateActive(index) {
-    // Met à jour les onglets
+    index = Math.max(0, Math.min(index, tabs.length - 1));
     tabs.forEach((t, i) => t.classList.toggle('active', i === index));
-
-    // Met à jour les cours
     courses.forEach((c, i) => c.classList.toggle('active', i === index));
-
-    // Déplace ET redimensionne le selector
     moveSelectorTo(index);
-
     currentIndex = index;
   }
 
-  // Clic sur onglets
-  tabs.forEach((tab, i) => {
-    tab.addEventListener('click', () => {
-      scrollToCourse(i);
-    });
-  });
-
-  // Fonction pour scroller vers un cours
+  // ---- scrolling to course (smooth) and immediately update active states
   function scrollToCourse(index) {
-    const courseWidth = courses[0].offsetWidth;
+    index = Math.max(0, Math.min(index, courses.length - 1));
+    const courseWidth = courses[0].offsetWidth || coursesWrapper.clientWidth;
+    // trigger scroll
     coursesWrapper.scrollTo({
       left: courseWidth * index,
       behavior: 'smooth'
     });
+    // Update UI immediately (so selector resizes on swipe/click without waiting scroll)
     updateActive(index);
   }
 
-  // Initial
-  scrollToCourse(0);
-
-  // Swipe / scroll horizontal
-  let isTouching = false;
-  let startX = 0;
-
-  coursesWrapper.addEventListener('touchstart', e => {
-    isTouching = true;
-    startX = e.touches[0].clientX;
+  // ---- click handlers on tabs
+  tabs.forEach((tab, i) => {
+    tab.addEventListener('click', (e) => {
+      e.preventDefault();
+      scrollToCourse(i);
+    });
   });
 
-  coursesWrapper.addEventListener('touchmove', e => {
+  // ---- initialize
+  updateActive(0);
+  // ensure selector positioned after fonts/style applied
+  window.requestAnimationFrame(() => moveSelectorTo(currentIndex));
+
+  // ---- touch swipe handling on coursesWrapper
+  coursesWrapper.addEventListener('touchstart', (e) => {
+    isTouching = true;
+    startX = e.touches[0].clientX;
+    // stop any ongoing debounce to recalc index after manual movement
+    if (scrollDebounceTimer) clearTimeout(scrollDebounceTimer);
+  }, { passive: true });
+
+  coursesWrapper.addEventListener('touchmove', (e) => {
     if (!isTouching) return;
     const moveX = e.touches[0].clientX;
     const diff = startX - moveX;
-
-    // On swipe terminé, on change l'index
+    // threshold to change page while swiping
     if (Math.abs(diff) > 50) {
       if (diff > 0 && currentIndex < courses.length - 1) {
         scrollToCourse(currentIndex + 1);
       } else if (diff < 0 && currentIndex > 0) {
         scrollToCourse(currentIndex - 1);
       }
-      isTouching = false; // reset
+      isTouching = false; // prevent multiple triggers until next touchstart
     }
-  });
+  }, { passive: true });
 
   coursesWrapper.addEventListener('touchend', () => {
     isTouching = false;
+    // In case user scrolled manually (not enough to trigger threshold),
+    // we wait a moment and snap to the nearest slide
+    scrollDebounceTimer = setTimeout(() => {
+      snapToNearestCourse();
+    }, 120);
   });
 
-  // Sync sur resize
-  window.addEventListener('resize', () => scrollToCourse(currentIndex));
-});
-// selecteur calcul largeur dynamique
-document.addEventListener('DOMContentLoaded', () => {
-  const tabs = document.querySelectorAll('.carrousel ul li');
-  const selector = document.querySelector('.carrousel .selector');
+  // ---- optional: if user uses mouse wheel / trackpad horizontal scroll
+  let wheelTimer = null;
+  coursesWrapper.addEventListener('wheel', (e) => {
+    if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) {
+      // user is horizontally scrolling
+      if (wheelTimer) clearTimeout(wheelTimer);
+      wheelTimer = setTimeout(() => snapToNearestCourse(), 150);
+    }
+  }, { passive: true });
 
-  function moveSelectorTo(index) {
-    const tab = tabs[index];
-    const { offsetLeft, offsetWidth } = tab;
-
-    selector.style.left = `${offsetLeft}px`;
-    selector.style.width = `${offsetWidth}px`;
+  // ---- snap helper: compute nearest index from scrollLeft and snap
+  function snapToNearestCourse() {
+    const courseWidth = courses[0].offsetWidth || coursesWrapper.clientWidth;
+    const left = coursesWrapper.scrollLeft;
+    const index = Math.round(left / courseWidth);
+    scrollToCourse(index);
   }
 
-  // 👉 Clic sur les onglets
-  tabs.forEach((tab, index) => {
-    tab.addEventListener('click', () => {
-      tabs.forEach(t => t.classList.remove('active'));
-      tab.classList.add('active');
-      moveSelectorTo(index);
-    });
-  });
+  // ---- ensure selector updates on manual scroll end as well
+  coursesWrapper.addEventListener('scroll', () => {
+    // debounce to run snap detection after scrolling stops
+    if (scrollDebounceTimer) clearTimeout(scrollDebounceTimer);
+    scrollDebounceTimer = setTimeout(() => {
+      snapToNearestCourse();
+    }, 150);
+  }, { passive: true });
 
-  // 👉 Initialisation au premier onglet
-  if (tabs[0]) {
-    tabs[0].classList.add('active');
-    moveSelectorTo(0);
-  }
-
-  // 👉 Recalcule si la fenêtre change de taille (important pour responsive)
+  // ---- sync on window resize (recompute widths and reposition)
   window.addEventListener('resize', () => {
-    const activeIndex = [...tabs].findIndex(t => t.classList.contains('active'));
-    if (activeIndex >= 0) moveSelectorTo(activeIndex);
+    // keep showing the same logical slide after resize
+    // use requestAnimationFrame to ensure layout updated
+    window.requestAnimationFrame(() => {
+      scrollToCourse(currentIndex);
+      moveSelectorTo(currentIndex);
+    });
   });
 });
 
