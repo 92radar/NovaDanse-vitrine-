@@ -591,12 +591,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // ---- helper: update active states, selector and index (no scrolling)
   function updateActive(index) {
-    index = Math.max(0, Math.min(index, tabs.length - 1));
-    tabs.forEach((t, i) => t.classList.toggle('active', i === index));
-    courses.forEach((c, i) => c.classList.toggle('active', i === index));
-    moveSelectorTo(index);
-    currentIndex = index;
-  }
+  currentIndex = index;
+
+  // Met à jour les onglets
+  tabs.forEach((t, i) => t.classList.toggle('active', i === index));
+
+  // Met à jour les cours
+  courses.forEach((c, i) => c.classList.toggle('active', i === index));
+
+  // Met à jour le selector
+  moveSelectorTo(index);
+}
+
 
   // ---- scrolling to course (smooth) and immediately update active states
   function scrollToCourse(index) {
@@ -668,23 +674,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // ---- snap helper: compute nearest index from scrollLeft and snap
   function snapToNearestCourse() {
-  const courseWidth = courses[0].offsetWidth || coursesWrapper.clientWidth;
-
-  if (courseWidth <= 0) return; // sécurité
+  const courseWidth = courses[0].offsetWidth;
+  if (courseWidth === 0) return;
 
   const left = coursesWrapper.scrollLeft;
-  let index = Math.round(left / courseWidth);
+  const index = Math.round(left / courseWidth);
 
-  // sécurités anti-retour à 0
-  index = Math.max(0, Math.min(index, courses.length - 1));
-
-  // si index est différent de currentIndex → MAJ correcte
-  if (index !== currentIndex) {
-    updateActive(index);
-  } else {
-    // même index mais selector pas à jour → MAJ forcée
-    moveSelectorTo(index);
-  }
+  // On ne change JAMAIS currentIndex
+  // si il a déjà été fixé par swipe
+  updateActive(index);
 }
 
   // ---- ensure selector updates on manual scroll end as well
